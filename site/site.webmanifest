@@ -1,0 +1,19 @@
+{
+  "name": "Heritage Fine Scale",
+  "short_name": "HFS",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#16110A",
+  "background_color": "#16110A",
+  "display": "standalone"
+}

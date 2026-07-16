@@ -1,0 +1,180 @@
+/* HFS — chronology.css (generated) */
+
+.article { max-width: 880px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
+.article.intro { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.article.intro .deck { margin-bottom: 1rem; }
+.kicker {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.78rem;
+      color: var(--ink-light); text-align: center; margin-bottom: 0.9rem;
+    }
+.article h1 {
+      font-family: 'Source Serif 4', 'Noto Serif JP', Georgia, serif; font-weight: 400;
+      font-size: clamp(1.7rem, 4.5vw, 2.5rem); line-height: 1.22;
+      text-align: center; margin-bottom: 0.2rem;
+    }
+.deck {
+      text-align: center; color: var(--ink-mid); font-style: italic;
+      max-width: 620px; margin: 0.5rem auto 2.4rem;
+    }
+.belligerents {
+      background-color: var(--field); color: var(--bone);
+      border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink);
+    }
+.bel-inner { max-width: 960px; margin: 0 auto; padding: 2.6rem 1.5rem 2.4rem; text-align: center; }
+.bel-eyebrow { width: 64px; margin: 0 auto 1.3rem; }
+.bel-title {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.22em; font-size: 0.86rem;
+      color: var(--metal); margin-bottom: 1.8rem;
+    }
+.bel-side {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.28em; font-size: 0.7rem;
+      color: var(--rule); margin-bottom: 1rem;
+    }
+.flag-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem 1rem; }
+.flag { width: 84px; display: flex; flex-direction: column; align-items: center; }
+.flag svg {
+      width: 60px; height: 40px; display: block;
+      border: 1px solid rgba(207,196,170,0.5); background: #0d0a06;
+    }
+.flag figcaption {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 500;
+      font-size: 0.58rem; letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--rule); margin-top: 0.4rem; line-height: 1.2; width: 100%;
+    }
+.bel-divider {
+      width: 60%; max-width: 420px; height: 1px; margin: 1.9rem auto;
+      background: rgba(207,196,170,0.28);
+    }
+.bel-note {
+      max-width: 640px; margin: 1.9rem auto 0; font-size: 0.82rem;
+      color: var(--ink-light); font-style: italic; line-height: 1.55;
+    }
+.scope {
+      background: var(--field); color: var(--bone);
+      border: 1px solid var(--ink); padding: 1.7rem 1.7rem 1.5rem; margin: 2.6rem 0 1rem;
+    }
+.scope-title {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 600;
+      letter-spacing: 0.26em; text-transform: uppercase; font-size: 0.82rem;
+      color: var(--metal); text-align: center; margin-bottom: 1.2rem;
+    }
+.scope dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.5rem 1.4rem; font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; }
+.scope dt { font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; font-size: 0.78rem; color: var(--rule); padding-top: 0.12rem; }
+.scope dd { font-weight: 400; font-size: 0.96rem; letter-spacing: 0.02em; color: var(--bone); border-bottom: 1px solid rgba(207,196,170,0.22); padding-bottom: 0.4rem; }
+.scope dd em { font-style: italic; }
+.yearnav {
+      position: sticky; top: 0; z-index: 20;
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 0.2rem; background: var(--parchment);
+      border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+      padding: 0.5rem 0.75rem;
+    }
+.yearnav a {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 600;
+      font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-mid); text-decoration: none; padding: 0.25rem 0.7rem;
+      border: 1px solid transparent; transition: background 0.15s, color 0.15s;
+    }
+.yearnav a:hover { background: var(--field); color: var(--bone); }
+.cblock {
+      background: var(--parchment); border: 1px solid var(--rule);
+      padding: 2rem 1.9rem 1.8rem; margin: 2.6rem 0;
+    }
+.cblock-kicker {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 600;
+      letter-spacing: 0.3em; text-transform: uppercase; font-size: 0.72rem;
+      color: var(--oxblood); margin-bottom: 0.5rem;
+    }
+.cblock-title {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 600;
+      font-size: 1.15rem; letter-spacing: 0.06em; line-height: 1.25;
+      color: var(--ink); margin-bottom: 1.1rem;
+    }
+.cblock-body .fld { margin-bottom: 0.9rem; }
+.year { margin-top: 2.6rem; scroll-margin-top: 3.4rem; }
+.year-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.4rem; }
+.year-head h2 {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.4rem); letter-spacing: 0.08em;
+      color: var(--ink); line-height: 1;
+    }
+.year-head .rivet-rule { flex: 1; align-self: center; }
+.notes { margin-top: 3rem; scroll-margin-top: 3.4rem; }
+.entry {
+      background: var(--bone); border: 1px solid var(--rule);
+      border-left: 3px solid var(--oxblood);
+      padding: 1.4rem 1.5rem 1.2rem; margin-bottom: 1.4rem;
+    }
+.entry-date {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.74rem;
+      color: var(--ink-light); margin-bottom: 0.15rem;
+    }
+.entry-title {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 600;
+      font-size: 1.18rem; letter-spacing: 0.03em; line-height: 1.25;
+      color: var(--ink); margin-bottom: 0.85rem;
+    }
+.entry-title em { font-style: italic; font-weight: 600; }
+.fld { margin-bottom: 0.6rem; }
+.fld:last-child { margin-bottom: 0; }
+.fld-k {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.74rem;
+      color: var(--oxblood); margin-right: 0.6rem;
+    }
+.fld-k::after { content: ""; }
+.fld-v { font-size: 0.99rem; color: var(--ink-mid); }
+.fld-v em { font-style: italic; }
+.fld-v strong { font-weight: 600; color: var(--ink); }
+.notes-list { list-style: none; }
+.notes-list li {
+      position: relative; padding-left: 1.4rem; margin-bottom: 1rem;
+      font-size: 0.99rem; color: var(--ink-mid);
+    }
+.notes-list li::before {
+      content: ""; position: absolute; left: 0; top: 0.62em;
+      width: 6px; height: 6px; background: var(--oxblood); border-radius: 50%;
+    }
+.notes-list strong { font-weight: 600; color: var(--ink); }
+.notes-list em { font-style: italic; }
+@media (max-width: 600px) {
+      nav ul li a { padding: 0.7rem 1rem; font-size: 0.76rem; }
+      .scope dl { grid-template-columns: 1fr; gap: 0.15rem 0; }
+      .scope dd { margin-bottom: 0.6rem; }
+    }
+.insignia { width: 64px; display: flex; flex-direction: column; align-items: center; }
+.insignia svg {
+      width: 40px; height: 40px; display: block;
+      background: transparent; border: none;
+    }
+.insignia figcaption {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 500;
+      font-size: 0.58rem; letter-spacing: 0.04em; text-transform: uppercase;
+      color: var(--rule); margin-top: 0.45rem; line-height: 1.2; width: 100%;
+    }
+.cblock { scroll-margin-top: 3.4rem; }
+#addendum { scroll-margin-top: 3.4rem; }
+.h1-range { display: block; margin-top: 0.1rem; font-variant-numeric: tabular-nums; }
+.flag-rows { display: flex; flex-direction: column; gap: 1.1rem; }
+.cblock-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.totop {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 600;
+      font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--ink-light); text-decoration: none; align-self: center;
+      white-space: nowrap; opacity: 0.7; transition: color 0.15s, opacity 0.15s;
+    }
+.totop:hover { color: var(--oxblood); opacity: 1; }
+.year-head .totop, .notes .totop { margin-left: auto; }
+.named-section { scroll-margin-top: 3.4rem; }
+.year-head h2.named-h2 {
+      font-size: clamp(1.25rem, 3vw, 1.7rem); letter-spacing: 0.06em;
+      font-weight: 600; line-height: 1.2;
+    }
+.section-preamble {
+      font-style: italic; color: var(--ink-mid); font-size: 0.97rem;
+      max-width: 720px; margin: -0.4rem 0 1.4rem; line-height: 1.65;
+    }

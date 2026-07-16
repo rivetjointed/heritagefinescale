@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Combat Aircraft · Annual Production · Heritage Fine Scale</title>
+  <meta name="description" content="Stream chart of 32 major combat aircraft across five nations, plotting approximate annual production over each type's service life. Heritage Fine Scale data visualization." />
+
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#16110A" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=Roboto+Condensed:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/dataviz.css" />
+</head>
+<body>
+
+  <!-- ══ HEADER ══ -->
+  <header class="riveted" id="top">
+    <span class="rvt tl"></span><span class="rvt tr"></span>
+    <span class="rvt bl"></span><span class="rvt br"></span>
+    <div class="lockup">
+      <a href="/" aria-label="Heritage Fine Scale home">
+        <svg class="shield" viewBox="0 0 120 144" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Heritage Fine Scale">
+          <path d="M24,14 L96,14 L106,24 L106,72 C106,102 86,126 60,138 C34,126 14,102 14,72 L14,24 Z" fill="#16110A" stroke="#CFC4AA" stroke-width="1.4"/>
+          <path d="M28,19 L92,19 L101,28 L101,71 C101,98 83,120 60,131 C37,120 19,98 19,71 L19,28 Z" fill="none" stroke="#CFC4AA" stroke-width="0.7" opacity="0.45"/>
+          <text x="42" y="60" text-anchor="middle" font-family="'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif" font-weight="700" font-size="31" fill="#F2ECDF">H</text>
+          <text x="60" y="83" text-anchor="middle" font-family="'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif" font-weight="700" font-size="31" fill="#F2ECDF">F</text>
+          <text x="78" y="106" text-anchor="middle" font-family="'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif" font-weight="700" font-size="31" fill="#F2ECDF">S</text>
+          <g fill="#6A2429"><circle cx="29" cy="21" r="2.3"/><circle cx="60" cy="19" r="2.3"/><circle cx="91" cy="21" r="2.3"/><circle cx="99" cy="50" r="2.3"/><circle cx="84" cy="104" r="2.3"/><circle cx="60" cy="127" r="2.3"/><circle cx="36" cy="104" r="2.3"/><circle cx="21" cy="50" r="2.3"/></g>
+        </svg>
+        <div class="lockup-text">
+          <div class="wordmark">Heritage Fine Scale</div>
+          <div class="rivet-rule wordmark-rule"></div>
+          <div class="subline">Portland, Oregon &middot; U.S.A.</div>
+        </div>
+      </a>
+    </div>
+  </header>
+
+  <!-- ══ NAV ══ -->
+  <div id="site-nav"></div>
+
+  <!-- ══ PAGE HERO ══ -->
+  <section class="page-hero">
+    <div class="rivet-rule page-hero-eyebrow"></div>
+    <h1>Combat Aircraft: Annual Production</h1>
+    <p>Thirty-two major combat aircraft across five nations, plotted as production curves over each type's service life. Ribbon thickness is proportional to √(units built that year), so shape reads as tempo rather than absolute count; the figure at right is the production total, and a dashed outline marks output that continued after 1945.</p>
+  </section>
+
+  <!-- ══ MAIN CONTENT ══ -->
+  <main class="content-wrap">
+
+    <div class="section-head">
+      <h2>Data Visualization</h2>
+      <div class="sh-rule"></div>
+    </div>
+
+    <div class="chart-frame">
+      <svg viewBox="0 0 800 1080" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stream chart of combat aircraft annual production by nation">
+<title>Major combat aircraft: annual production over service life</title>
+<desc>Stream-chart of 32 major combat aircraft grouped by nation. Ribbon thickness reflects production rate (sqrt-scaled). Post-war production (1946+) shown with dashed outline.</desc>
+
+<text x="400" y="20" text-anchor="middle" font-size="14" font-weight="500" class="th" fill="#e8e4d8">Major combat aircraft: annual production curves</text>
+<text x="400" y="36" text-anchor="middle" font-size="10" font-style="italic" fill="#a09a8a">Ribbon thickness ≈ units produced that year (sqrt-scaled) · number = total produced · dashed outline = post-war production</text>
+
+<g transform="translate(150, 50)" font-size="11">
+  <rect width="14" height="10" fill="#888780"/><text x="18" y="9" fill="#e8e4d8">Germany</text>
+  <rect x="80" width="14" height="10" fill="#D85A30"/><text x="98" y="9" fill="#e8e4d8">USSR</text>
+  <rect x="155" width="14" height="10" fill="#7F77DD"/><text x="173" y="9" fill="#e8e4d8">UK</text>
+  <rect x="215" width="14" height="10" fill="#1D9E75"/><text x="233" y="9" fill="#e8e4d8">USA</text>
+  <rect x="280" width="14" height="10" fill="#EF9F27"/><text x="298" y="9" fill="#e8e4d8">Japan</text>
+</g>
+
+<g font-size="10" fill="#a09a8a" text-anchor="middle">
+  <text x="180" y="82">1934</text>
+  <text x="260" y="82">1936</text>
+  <text x="340" y="82">1938</text>
+  <text x="420" y="82">1940</text>
+  <text x="500" y="82">1942</text>
+  <text x="580" y="82">1944</text>
+  <text x="660" y="82">1946</text>
+  <text x="740" y="82">1948</text>
+</g>
+
+<!-- year grid lines -->
+<g stroke="#e8e4d8" stroke-width="0.3" opacity="0.15">
+  <line x1="180" y1="92" x2="180" y2="1060"/>
+  <line x1="260" y1="92" x2="260" y2="1060"/>
+  <line x1="340" y1="92" x2="340" y2="1060"/>
+  <line x1="420" y1="92" x2="420" y2="1060"/>
+  <line x1="500" y1="92" x2="500" y2="1060"/>
+  <line x1="580" y1="92" x2="580" y2="1060"/>
+  <line x1="660" y1="92" x2="660" y2="1060"/>
+  <line x1="740" y1="92" x2="740" y2="1060"/>
+</g>
+
+<!-- war start / end markers -->
+<g stroke="#e8e4d8" stroke-width="0.8" stroke-dasharray="2,3" opacity="0.5">
+  <line x1="380" y1="92" x2="380" y2="1060"/>
+  <line x1="620" y1="92" x2="620" y2="1060"/>
+</g>
+<text x="380" y="100" font-size="9" text-anchor="middle" font-style="italic" fill="#a09a8a">Sept 1939</text>
+<text x="620" y="100" font-size="9" text-anchor="middle" font-style="italic" fill="#a09a8a">V-E / V-J 1945</text>
+
+<!-- post-war shading -->
+<rect x="620" y="92" width="140" height="968" fill="#e8e4d8" opacity="0.03"/>
+
+<g id="chart-body"></g>
+</svg>
+    </div>
+
+    <dl class="meta-grid">
+      <div class="meta-item">
+        <dt>Types shown</dt>
+        <dd>32 major fighters, bombers, and attack aircraft</dd>
+      </div>
+      <div class="meta-item">
+        <dt>Nations</dt>
+        <dd>Germany, USSR, UK, USA, Japan</dd>
+      </div>
+      <div class="meta-item">
+        <dt>Period covered</dt>
+        <dd>1934 – 1948 (service-life span; post-war tails dashed)</dd>
+      </div>
+      <div class="meta-item">
+        <dt>Most produced</dt>
+        <dd>Il-2 Shturmovik, ~36,200: The most-built military aircraft in history</dd>
+      </div>
+      <div class="meta-item">
+        <dt>Scale method</dt>
+        <dd>Square-root scaling of annual output; one shared rate axis across all types</dd>
+      </div>
+      <div class="meta-item">
+        <dt>Data granularity</dt>
+        <dd>Annual; totals are standard reference figures, yearly splits approximate</dd>
+      </div>
+    </dl>
+
+    <div class="narrative">
+      <h3>Context</h3>
+      <p>Production is the quiet half of every air war. A type's curve records not just how many were built but when a nation could afford to build them, and against what competing demands. Read across the five bands, the chart is less a catalog of aircraft than a picture of five war economies under load.</p>
+      <p>The Soviet and American bands tell the volume story. The <em>Il-2 Shturmovik</em> alone exceeds thirty-six thousand airframes, the highest production run of any military aircraft ever flown, and the Soviet fighter and attack types sustain broad ribbons straight through the war's worst years. The American band is dominated by four-engine mass (the B-24 and B-17) and by fighters whose late-war output (P-47, P-51, F6F) arrives in quantities that simply overwhelm.</p>
+      <p>Germany's bands carry a counter-intuitive shape: peak single-engine fighter production came in <em>1944</em>, not earlier, as dispersal and the Jägerstab emergency program pushed Bf 109 and Fw 190 output to its highest levels under the heaviest bombing of the war, airframes by then outrunning the fuel and trained pilots to use them. Japan's curves rise late and break early, the A6M and Ki-84 climbing into 1944 before raw-material and dispersal collapse cut them short.</p>
+      <p>For the bench, the curve is a sourcing map. A type at the fat middle of its band is the one with the deepest kit support, the most marking options, and the best-documented variants; a type out on a thin early or late tail is where the interesting, under-modeled subjects live.</p>
+    </div>
+
+    <div class="sources">
+      <h3>Sources &amp; method</h3>
+      <ul>
+        <li><em>Method:</em> ribbon half-width = MAX_HALF · √(units that year / MAX_RATE), a shared square-root rate scale identical to the armor chart, so the two read on the same visual grammar. Totals are standard reference figures; annual splits are reconstructed and approximate.</li>
+        <li>Green, William, and Gordon Swanborough. <em>The Complete Book of Fighters</em>. Salamander, 1994. (Type totals and variant production runs.)</li>
+        <li>Gunston, Bill. <em>The Illustrated Encyclopedia of Combat Aircraft of World War II</em>. (Cross-reference for output and service dates.)</li>
+        <li>Air Ministry / USAAF Statistical Digest and national production records, as compiled in the standard type monographs. (Year-by-year output.)</li>
+      </ul>
+    </div>
+
+  </main>
+
+  <a href="#top" class="to-top" id="toTop" aria-label="Back to top" title="Back to top">&uarr;</a>
+
+  <footer>
+    <p>&copy; 2026 Heritage Fine Scale &nbsp;&middot;&nbsp; Portland, Oregon</p>
+  </footer>
+
+  <!-- ══ CHART SCRIPT ══ -->
+  <script>
+(function () {
+  const aircraft = [
+    { name: 'Bf 109',            nation: 'Germany', prod: {1937:50,1938:200,1939:450,1940:1540,1941:2628,1942:2664,1943:6418,1944:13942,1945:3392}, total: 33984 },
+    { name: 'Ju 87 Stuka',       nation: 'Germany', prod: {1936:50,1937:100,1938:150,1939:557,1940:603,1941:500,1942:960,1943:1672,1944:1908}, total: 6500 },
+    { name: 'He 111',            nation: 'Germany', prod: {1936:100,1937:300,1938:452,1939:756,1940:756,1941:950,1942:1337,1943:1405,1944:1547}, total: 7603 },
+    { name: 'Ju 88',             nation: 'Germany', prod: {1939:69,1940:1816,1941:2619,1942:3094,1943:3664,1944:3286,1945:635}, total: 15183 },
+    { name: 'Fw 190',            nation: 'Germany', prod: {1941:224,1942:1878,1943:3208,1944:11411,1945:3330}, total: 20051 },
+    { name: 'Me 262',            nation: 'Germany', prod: {1944:564,1945:866}, total: 1430 },
+    { name: 'I-16',              nation: 'USSR',    prod: {1934:50,1935:300,1936:800,1937:1500,1938:1200,1939:2000,1940:1700,1941:1300,1942:550,1943:50}, total: 9450 },
+    { name: 'Yak-1',             nation: 'USSR',    prod: {1940:64,1941:1354,1942:3474,1943:2720,1944:1109}, total: 8721 },
+    { name: 'Il-2 Shturmovik',   nation: 'USSR',    prod: {1941:1549,1942:8229,1943:11193,1944:11101,1945:4111}, total: 36183 },
+    { name: 'Pe-2',              nation: 'USSR',    prod: {1941:1867,1942:2434,1943:2951,1944:2773,1945:1402}, total: 11427 },
+    { name: 'La-5 / La-7',       nation: 'USSR',    prod: {1942:1727,1943:4619,1944:4851,1945:3803}, total: 15000 },
+    { name: 'Yak-9',             nation: 'USSR',    prod: {1942:459,1943:2493,1944:4848,1945:4135,1946:2000,1947:1500,1948:1334}, total: 16769 },
+    { name: 'Hurricane',         nation: 'UK',      prod: {1937:100,1938:200,1939:800,1940:2810,1941:3200,1942:2100,1943:3700,1944:1577}, total: 14487 },
+    { name: 'Spitfire',          nation: 'UK',      prod: {1938:50,1939:200,1940:1500,1941:1854,1942:2528,1943:3923,1944:4500,1945:3800,1946:1200,1947:500,1948:196}, total: 20351 },
+    { name: 'Wellington',        nation: 'UK',      prod: {1938:100,1939:700,1940:2200,1941:2200,1942:1900,1943:2300,1944:1700,1945:361}, total: 11461 },
+    { name: 'Beaufighter',       nation: 'UK',      prod: {1940:50,1941:850,1942:1500,1943:1500,1944:1300,1945:600,1946:128}, total: 5928 },
+    { name: 'Typhoon',           nation: 'UK',      prod: {1941:100,1942:700,1943:1200,1944:1100,1945:217}, total: 3317 },
+    { name: 'Lancaster',         nation: 'UK',      prod: {1942:200,1943:1500,1944:3000,1945:2200,1946:477}, total: 7377 },
+    { name: 'B-17',              nation: 'USA',     prod: {1938:13,1939:38,1940:65,1941:140,1942:2300,1943:5000,1944:4500,1945:675}, total: 12731 },
+    { name: 'P-40',              nation: 'USA',     prod: {1939:200,1940:778,1941:2246,1942:4453,1943:4258,1944:1803}, total: 13738 },
+    { name: 'P-38 Lightning',    nation: 'USA',     prod: {1941:200,1942:1480,1943:2497,1944:4186,1945:1674}, total: 10037 },
+    { name: 'B-24 Liberator',    nation: 'USA',     prod: {1941:100,1942:1200,1943:5000,1944:9500,1945:2682}, total: 18482 },
+    { name: 'P-47 Thunderbolt',  nation: 'USA',     prod: {1942:532,1943:4428,1944:7065,1945:3611}, total: 15636 },
+    { name: 'P-51 Mustang',      nation: 'USA',     prod: {1942:100,1943:1710,1944:6904,1945:6872}, total: 15586 },
+    { name: 'F6F Hellcat',       nation: 'USA',     prod: {1942:12,1943:2545,1944:6139,1945:3578}, total: 12275 },
+    { name: 'B-29 Superfortress',nation: 'USA',     prod: {1944:1147,1945:2613,1946:210}, total: 3970 },
+    { name: 'A6M Zero',          nation: 'Japan',   prod: {1940:99,1941:399,1942:1148,1943:2876,1944:4358,1945:2059}, total: 10939 },
+    { name: 'Ki-43 Hayabusa',    nation: 'Japan',   prod: {1941:90,1942:750,1943:1500,1944:2200,1945:1379}, total: 5919 },
+    { name: 'G4M Betty',         nation: 'Japan',   prod: {1941:60,1942:240,1943:480,1944:1200,1945:455}, total: 2435 },
+    { name: 'Ki-61 Hien',        nation: 'Japan',   prod: {1942:34,1943:500,1944:1500,1945:1125}, total: 3159 },
+    { name: 'N1K Shiden',        nation: 'Japan',   prod: {1943:50,1944:700,1945:782}, total: 1532 },
+    { name: 'Ki-84 Hayate',      nation: 'Japan',   prod: {1944:1670,1945:1844}, total: 3514 }
+  ];
+
+  const colors = { Germany: '#888780', USSR: '#D85A30', UK: '#7F77DD', USA: '#1D9E75', Japan: '#EF9F27' };
+  const NS = 'http://www.w3.org/2000/svg';
+  const body = document.getElementById('chart-body');
+
+  // yearToX: 1934→180, each year = 40px
+  // 1939→380 (war start), 1945→620 (war end), 1946→660, 1948→740
+  const yearToX = function (y) { return 180 + (y - 1934) * 40; };
+  const MAX_RATE = 14000, MAX_HALF = 9;
+  const prodToHalf = function (p) { return p <= 0 ? 0 : MAX_HALF * Math.sqrt(p / MAX_RATE); };
+
+  const WAR_END = 1945; // last wartime year; 1946+ = post-war
+
+  const nationOrder = ['Germany', 'USSR', 'UK', 'USA', 'Japan'];
+  const byNation = {};
+  nationOrder.forEach(function (n) { byNation[n] = []; });
+  aircraft.forEach(function (a) { byNation[a.nation].push(a); });
+
+  let y = 115;
+  const ROW_SPACING = 24;
+
+  nationOrder.forEach(function (nation) {
+    // Nation header label
+    const label = document.createElementNS(NS, 'text');
+    label.setAttribute('x', '14');
+    label.setAttribute('y', y);
+    label.setAttribute('font-size', '12');
+    label.setAttribute('font-weight', '500');
+    label.setAttribute('fill', '#e8e4d8');
+    label.textContent = nation;
+    body.appendChild(label);
+    y += 25;
+
+    byNation[nation].forEach(function (a) {
+      const centerY = y;
+
+      // Aircraft name
+      const nameText = document.createElementNS(NS, 'text');
+      nameText.setAttribute('x', '175');
+      nameText.setAttribute('y', centerY + 4);
+      nameText.setAttribute('text-anchor', 'end');
+      nameText.setAttribute('font-size', '11');
+      nameText.setAttribute('fill', '#e8e4d8');
+      nameText.textContent = a.name;
+      body.appendChild(nameText);
+
+      const years = Object.keys(a.prod).map(Number).sort(function (a, b) { return a - b; });
+      const firstYear = years[0];
+      const lastYear = years[years.length - 1];
+
+      const warYears  = years.filter(function (yr) { return yr <= WAR_END; });
+      const postYears = years.filter(function (yr) { return yr > WAR_END; });
+
+      // ── Full ribbon polygon (all years, solid fill) ──────────────────────
+      const pts = [];
+      pts.push([yearToX(Math.max(1934, firstYear - 0.5)), centerY]);
+      years.forEach(function (yr) {
+        pts.push([yearToX(yr), centerY - prodToHalf(a.prod[yr])]);
+      });
+      pts.push([yearToX(Math.min(1948, lastYear + 0.5)), centerY]);
+      years.slice().reverse().forEach(function (yr) {
+        pts.push([yearToX(yr), centerY + prodToHalf(a.prod[yr])]);
+      });
+
+      const polygon = document.createElementNS(NS, 'polygon');
+      polygon.setAttribute('points', pts.map(function (p) { return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' '));
+      polygon.setAttribute('fill', colors[nation]);
+      body.appendChild(polygon);
+
+      // ── Post-war dashed outline overlay ──────────────────────────────────
+      if (postYears.length > 0) {
+        // The boundary sits between WAR_END (1945) and WAR_END+1 (1946).
+        // We interpolate the ribbon width at x = yearToX(WAR_END + 0.5)
+        // using the last wartime year's half-width (or 0 if none).
+        const boundaryX = yearToX(WAR_END + 0.5); // midpoint between 1945 and 1946
+        const hBoundary = warYears.length > 0
+          ? prodToHalf(a.prod[warYears[warYears.length - 1]])
+          : prodToHalf(a.prod[postYears[0]]);
+
+        const pp = [];
+        // Top edge: from boundary → through post-war years → right tip
+        pp.push([boundaryX, centerY - hBoundary]);
+        postYears.forEach(function (yr) {
+          pp.push([yearToX(yr), centerY - prodToHalf(a.prod[yr])]);
+        });
+        pp.push([yearToX(Math.min(1948, lastYear + 0.5)), centerY]);
+        // Bottom edge back: right tip → through post-war years → back to boundary
+        postYears.slice().reverse().forEach(function (yr) {
+          pp.push([yearToX(yr), centerY + prodToHalf(a.prod[yr])]);
+        });
+        pp.push([boundaryX, centerY + hBoundary]);
+        // polygon auto-closes back to start (the left cap)
+
+        const overlay = document.createElementNS(NS, 'polygon');
+        overlay.setAttribute('points', pp.map(function (p) { return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' '));
+        overlay.setAttribute('fill', 'none');
+        overlay.setAttribute('stroke', colors[nation]);
+        overlay.setAttribute('stroke-width', '1.4');
+        overlay.setAttribute('stroke-dasharray', '4,2.5');
+        overlay.setAttribute('stroke-linejoin', 'round');
+        body.appendChild(overlay);
+      }
+
+      // Total production label
+      const totalText = document.createElementNS(NS, 'text');
+      totalText.setAttribute('x', '750');
+      totalText.setAttribute('y', centerY + 4);
+      totalText.setAttribute('font-size', '11');
+      totalText.setAttribute('fill', '#a09a8a');
+      totalText.textContent = a.total.toLocaleString();
+      body.appendChild(totalText);
+
+      y += ROW_SPACING;
+    });
+    y += 14;
+  });
+})();
+</script>
+
+  <!-- ══ BACK TO TOP ══ -->
+  <script>
+    (function () {
+      var b = document.getElementById('toTop');
+      if (!b) return;
+      var t = function () {
+        if (window.pageYOffset > 600) b.classList.add('show');
+        else b.classList.remove('show');
+      };
+      window.addEventListener('scroll', t, { passive: true });
+      t();
+    })();
+  </script>
+
+  <script src="/nav.js" defer></script>
+
+</body>
+</html>

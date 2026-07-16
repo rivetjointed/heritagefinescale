@@ -1,0 +1,75 @@
+/* HFS — bibliography.css (generated) */
+
+.article { max-width: 880px; margin: 0 auto; padding: 3rem 1.5rem 1rem; }
+.article.intro { padding-top: 1.5rem; padding-bottom: 1rem; }
+.kicker {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.78rem;
+      color: var(--ink-light); text-align: center; margin-bottom: 0.9rem;
+    }
+.article h1 {
+      font-family: 'Source Serif 4', 'Noto Serif JP', Georgia, serif; font-weight: 400;
+      font-size: clamp(1.7rem, 4.5vw, 2.5rem); line-height: 1.22;
+      text-align: center; margin-bottom: 0.2rem;
+    }
+.deck {
+      text-align: center; color: var(--ink-mid); font-style: italic;
+      max-width: 640px; margin: 0.6rem auto 1.4rem;
+    }
+.secnav {
+      position: sticky; top: 0; z-index: 20;
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 0.2rem; background: var(--parchment);
+      border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+      padding: 0.5rem 0.75rem;
+    }
+.secnav a {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 600;
+      font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-mid); text-decoration: none; padding: 0.25rem 0.7rem;
+      border: 1px solid transparent; transition: background 0.15s, color 0.15s;
+    }
+.secnav a:hover { background: var(--field); color: var(--bone); }
+.biblio { max-width: 880px; margin: 0 auto; padding: 1.6rem 1.5rem 4rem; }
+.biblio-note {
+      max-width: 760px; margin: 3rem auto 0; font-size: 0.86rem;
+      color: var(--ink-light); font-style: italic; line-height: 1.55;
+      border-left: 3px solid var(--oxblood); padding: 0.2rem 0 0.2rem 1rem;
+    }
+.refsec { margin-top: 2.8rem; scroll-margin-top: 3.4rem; }
+.refsec-rule { margin-bottom: 1.1rem; }
+.refsec-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.3rem; }
+.refsec-head h2 {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 700;
+      font-size: clamp(1.4rem, 3.2vw, 1.85rem); letter-spacing: 0.06em;
+      color: var(--ink); line-height: 1; white-space: nowrap;
+    }
+.cites { list-style: none; }
+.cite {
+      padding-left: 2.2em; text-indent: -2.2em;
+      margin-bottom: 0.95rem; font-size: 0.98rem; color: var(--ink-mid); line-height: 1.6;
+    }
+.cite em { font-style: italic; }
+.cite .orig { color: var(--ink-light); font-style: italic; }
+.set-vols { list-style: none; margin: 0.45rem 0 0.2rem; }
+.set-vols li {
+      padding-left: 3.4em; text-indent: -1.2em;
+      margin-bottom: 0.35rem; font-size: 0.93rem; color: var(--ink-mid); line-height: 1.5;
+    }
+.set-vols li::before {
+      content: "—"; color: var(--oxblood); margin-right: 0.5em; font-style: normal;
+    }
+.set-vols em { font-style: italic; }
+@media (max-width: 600px) {
+      nav ul li a { padding: 0.7rem 1rem; font-size: 0.76rem; }
+      .refsec-head h2 { white-space: normal; }
+      .cite { font-size: 0.95rem; }
+    }
+.totop {
+      font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 600;
+      font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--ink-light); text-decoration: none; align-self: center;
+      white-space: nowrap; opacity: 0.7; transition: color 0.15s, opacity 0.15s;
+      margin-left: auto;
+    }
+.totop:hover { color: var(--oxblood); opacity: 1; }

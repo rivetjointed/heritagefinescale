@@ -1,0 +1,120 @@
+/* HFS — success.css (generated) */
+
+body {
+      background-color: var(--cream);
+      color: var(--ink);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 17px;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+.rivet-rule {
+      height: 6px;
+      background-image: repeating-linear-gradient(
+        90deg,
+        var(--oxblood) 0, var(--oxblood) 6px,
+        transparent 6px, transparent 16px
+      );
+    }
+header {
+      background-color: var(--field);
+      color: var(--bone);
+      text-align: center;
+      padding: 2.5rem 1.5rem 2.25rem;
+      border-bottom: 1px solid var(--ink);
+    }
+.lockup {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.4rem;
+      flex-wrap: wrap;
+    }
+.shield { width: 72px; height: auto; display: block; flex-shrink: 0; }
+.wordmark {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: clamp(1.7rem, 4.5vw, 2.6rem);
+      line-height: 1;
+      color: var(--bone);
+    }
+.wordmark-rule {
+      width: calc(100% + 24px);
+      margin: 0.65rem 0 0.5rem -12px;
+    }
+.subline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.34em;
+      font-size: clamp(0.74rem, 1.4vw, 0.88rem);
+      color: var(--rule);
+    }
+main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1.5rem;
+    }
+.message-box {
+      background-color: var(--bone);
+      border: 1px solid var(--rule);
+      padding: 3rem 2.5rem;
+      max-width: 520px;
+      text-align: center;
+    }
+.message-box h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 1.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 0.85rem;
+    }
+.rule-line { width: 64px; margin: 0 auto 1.5rem; }
+.message-box p { color: var(--ink-mid); font-size: 1rem; margin-bottom: 1rem; }
+.message-box .aside { font-style: italic; color: var(--ink-light); }
+.btn-back {
+      display: inline-block;
+      margin-top: 1rem;
+      background-color: var(--field);
+      color: var(--bone);
+      text-decoration: none;
+      padding: 0.8rem 2.1rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 0.84rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      border: 1px solid var(--field);
+      transition: background 0.18s, color 0.18s;
+    }
+.btn-back:hover { background-color: var(--ink-mid); border-color: var(--ink-mid); }
+footer {
+      background-color: var(--ink-mid);
+      color: var(--rule);
+      text-align: center;
+      padding: 1.4rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 500;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      border-top: 1px solid var(--field);
+    }
+a:focus-visible {
+      outline: 2px solid var(--oxblood);
+      outline-offset: 2px;
+    }
+@media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+@media (max-width: 600px) {
+      nav ul li a { padding: 0.7rem 1rem; font-size: 0.76rem; }
+    }

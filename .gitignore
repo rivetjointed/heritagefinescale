@@ -1,0 +1,12 @@
+# Ignore everything at repo root by default,
+# then explicitly allow only what should be tracked.
+/*
+
+# Tracked site content and scripts
+!/site/
+!/toolkit/
+
+# Repo config
+!/.gitignore
+!/.gitattributes
+!/netlify.toml
