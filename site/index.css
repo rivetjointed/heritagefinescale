@@ -1,65 +1,29 @@
-/* HFS — index.css (generated) */
+/* HFS — index.css
+   Homepage. The foundation (body, .rivet-rule, .wordmark, .subline, footer)
+   lives in style.css and must not be restated here — only real overrides.
+   Never retype a font stack; use var(--font-*). Nav CSS is owned by nav.js. */
 
-body {
-      background-color: var(--cream);
-      color: var(--ink);
-      font-family: 'Source Serif 4', Georgia, serif;
-      font-weight: 400;
-      font-size: 17px;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-.rivet-rule {
-      height: 6px;
-      background-image: repeating-linear-gradient(
-        90deg,
-        var(--oxblood) 0, var(--oxblood) 6px,
-        transparent 6px, transparent 16px
-      );
-    }
-header .rvt.tl { top: 14px;    left: 16px;  }
-header .rvt.tr { top: 14px;    right: 16px; }
-header .rvt.bl { bottom: 14px; left: 16px;  }
-header .rvt.br { bottom: 14px; right: 16px; }
+/* The homepage runs the header lockup at display scale. */
 header {
-      background-color: var(--field);
-      color: var(--bone);
       text-align: center;
       padding: 3.5rem 1.5rem 3rem;
-      border-bottom: 1px solid var(--ink);
     }
-.lockup {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1.75rem;
-      flex-wrap: wrap;
-    }
-.shield { width: 104px; height: auto; display: block; flex-shrink: 0; }
-.wordmark {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-size: clamp(2.3rem, 6.5vw, 3.9rem);
-      line-height: 1;
-      color: var(--bone);
-    }
+/* Must qualify with .riveted to outrank `.riveted .rvt.tl` — see style.css. */
+header.riveted .rvt.tl { top: 14px;    left: 16px;  }
+header.riveted .rvt.tr { top: 14px;    right: 16px; }
+header.riveted .rvt.bl { bottom: 14px; left: 16px;  }
+header.riveted .rvt.br { bottom: 14px; right: 16px; }
+.lockup { gap: 1.75rem; }
+.shield { width: 104px; }
+.wordmark { font-size: clamp(2.3rem, 6.5vw, 3.9rem); }
 .wordmark-rule {
       width: calc(100% + 30px);
       margin: 0.8rem 0 0.65rem -15px;
     }
-.subline {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.34em;
-      font-size: clamp(0.82rem, 1.6vw, 0.98rem);
-      color: var(--rule);
-    }
+.subline { font-size: clamp(0.82rem, 1.6vw, 0.98rem); }
 .descriptor {
       margin-top: 1.9rem;
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: var(--font-condensed);
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.3em;
@@ -87,7 +51,7 @@ header {
     }
 .hero-eyebrow { width: 116px; margin: 0 auto 1.9rem; }
 .hero h1 {
-      font-family: 'Source Serif 4', Georgia, serif;
+      font-family: var(--font-serif);
       font-weight: 400;
       font-size: clamp(1.65rem, 4vw, 2.5rem);
       color: var(--ink);
@@ -112,7 +76,7 @@ header {
     }
 .creed-rule { width: 64px; margin: 0 auto 1.4rem; }
 .creed-label {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: var(--font-condensed);
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.26em;
@@ -121,7 +85,7 @@ header {
       margin-bottom: 1.15rem;
     }
 .creed-de, .creed-ru {
-      font-family: 'Source Serif 4', Georgia, serif;
+      font-family: var(--font-serif);
       font-style: italic;
       font-size: clamp(1.05rem, 2.2vw, 1.25rem);
       color: var(--bone);
@@ -131,7 +95,7 @@ header {
     }
 .creed-ru { margin-top: 0.35rem; }
 .creed-en {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: var(--font-condensed);
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.16em;
@@ -145,7 +109,7 @@ header {
       color: var(--bone);
       text-decoration: none;
       padding: 0.85rem 2.3rem;
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: var(--font-condensed);
       font-weight: 600;
       font-size: 0.86rem;
       letter-spacing: 0.22em;
@@ -159,7 +123,7 @@ header {
 .section-header h2,
     .about-inner h2,
     .contact-inner h2 {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: var(--font-condensed);
       font-weight: 600;
       font-size: clamp(1.4rem, 3vw, 1.95rem);
       letter-spacing: 0.1em;
@@ -187,7 +151,7 @@ header {
       padding: 2.1rem 1.8rem;
     }
 .service-card h3 {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: var(--font-condensed);
       font-weight: 600;
       font-size: 1.12rem;
       letter-spacing: 0.1em;
@@ -212,7 +176,7 @@ header {
 .contact-eyebrow { width: 90px; margin: 0 auto 1.6rem; }
 .contact-form { display: flex; flex-direction: column; gap: 1.1rem; text-align: left; }
 .contact-form label {
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: var(--font-condensed);
       font-weight: 500;
       font-size: 0.76rem;
       letter-spacing: 0.2em;
@@ -229,7 +193,7 @@ header {
       border: 1px solid rgba(207,196,170,0.35);
       color: var(--bone);
       padding: 0.7rem 0.9rem;
-      font-family: 'Barlow', sans-serif;
+      font-family: var(--font-sans);
       font-size: 0.95rem;
       outline: none;
       border-radius: 0;
@@ -246,7 +210,7 @@ header {
       color: var(--field);
       border: 1px solid var(--bone);
       padding: 0.9rem;
-      font-family: 'Barlow Condensed', sans-serif;
+      font-family: var(--font-condensed);
       font-weight: 600;
       font-size: 0.86rem;
       letter-spacing: 0.22em;
@@ -256,24 +220,13 @@ header {
       margin-top: 0.4rem;
     }
 .btn-submit:hover { background-color: var(--metal); border-color: var(--metal); }
-footer {
-      background-color: var(--ink-mid);
-      color: var(--rule);
-      text-align: center;
-      padding: 1.6rem;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 500;
-      font-size: 0.84rem;
-      letter-spacing: 0.14em;
-      border-top: 1px solid var(--field);
-    }
+/* Extends the foundation's focus ring to this page's form controls. */
 a:focus-visible, button:focus-visible,
     input:focus-visible, select:focus-visible, textarea:focus-visible {
       outline: 2px solid var(--oxblood);
       outline-offset: 2px;
     }
 @media (max-width: 600px) {
-      nav ul li a { padding: 0.7rem 1rem; font-size: 0.76rem; }
       .services-grid { grid-template-columns: 1fr; }
       .lockup { gap: 1.1rem; }
       .lockup-text { text-align: center; }

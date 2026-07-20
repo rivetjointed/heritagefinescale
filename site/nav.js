@@ -8,9 +8,10 @@
    style.css can never strand the nav again. Edit nav styling HERE, not in
    style.css.
 
-   TO ADD A PAGE: add one entry to OPERATIONS (a theater volume), to
-   REFERENCE (a reference page), or to TOP (a top-level item). Nothing else,
-   anywhere, needs to change.
+   TO ADD A PAGE: add one entry to OPERATIONS (a theater volume), REFERENCE
+   (a reference page), DOSSIERS (a long-form brief), or TOP (a top-level
+   item). Nothing else, anywhere, needs to change — toolkit/build.py renders
+   an empty <div id="site-nav"></div> and leaves the nav to this file.
 
    Active state is derived from the current path, so pages never hard-code it.
    On the homepage, section links stay as bare #anchors; elsewhere they point
@@ -96,12 +97,22 @@
   // First reference link doubles as the Reference parent target.
   var REFERENCE_PARENT = REFERENCE.filter(function (o) { return o.href; })[0].href;
 
+  // ---- Dossiers dropdown (long-form briefs), in series order -----------------
+  // Labelled by subject, matching the filename — not by the brief's title.
+  var DOSSIERS = [
+    { href: "/dossiers/ju87-picchiatello.html",        label: "Ju 87 Picchiatello" },
+    { href: "/dossiers/your-cooking-is-the-best.html", label: "Your Cooking Is The Best" }
+  ];
+
+  // First dossier link doubles as the Dossiers parent target.
+  var DOSSIERS_PARENT = DOSSIERS[0].href;
+
   // ---- Top-level items. `anchor` => homepage section link --------------------
   var TOP = [
     { kind: "anchor", frag: "services", label: "Services" },
     { kind: "ops",    label: "Operations" },
     { kind: "ref",    label: "Reference" },
-    { kind: "link",   href: "/dossiers/ju87-picchiatello.html",   label: "Dossiers" },
+    { kind: "dsr",    label: "Dossiers" },
     { kind: "anchor", frag: "about",    label: "About" },
     { kind: "anchor", frag: "contact",  label: "Get in Touch" }
   ];
@@ -118,6 +129,7 @@
   // Is any item within a dropdown the current page? (drives parent active state)
   var opsActive = OPERATIONS.some(function (o) { return isActive(o.href); });
   var refActive = REFERENCE.some(function (o) { return o.href && isActive(o.href); });
+  var dsrActive = DOSSIERS.some(function (o) { return isActive(o.href); });
 
   // ---- Build markup ----------------------------------------------------------
   function li(href, label, active) {
@@ -141,6 +153,7 @@
   var items = TOP.map(function (it) {
     if (it.kind === "ops")    return dropdownItem("Operations", OPERATIONS_PARENT, OPERATIONS, opsActive);
     if (it.kind === "ref")    return dropdownItem("Reference", REFERENCE_PARENT, REFERENCE, refActive);
+    if (it.kind === "dsr")    return dropdownItem("Dossiers", DOSSIERS_PARENT, DOSSIERS, dsrActive);
     if (it.kind === "anchor") return '      ' + li(anchorHref(it.frag), it.label, false);
     return '      ' + li(it.href, it.label, isActive(it.href));
   }).join("\n");

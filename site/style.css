@@ -18,6 +18,12 @@
   --field:      #16110A;
   --oxblood:    #6A2429;   /* RIVETS ONLY — never text fill */
   --rule:       #C4B89A;
+
+  /* Type stacks. Always use these — never retype a literal stack in a page
+     sheet, or the fallbacks silently rot out of sync (they already did once). */
+  --font-serif:     'Source Serif 4', 'Noto Serif JP', Georgia, serif;
+  --font-condensed: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif;
+  --font-sans:      'Barlow', 'Noto Sans JP', sans-serif;
 }
 
 html { scroll-behavior: smooth; }
@@ -25,7 +31,7 @@ html { scroll-behavior: smooth; }
 body {
   background-color: var(--cream);
   color: var(--ink);
-  font-family: 'Source Serif 4', 'Noto Serif JP', Georgia, serif;
+  font-family: var(--font-serif);
   font-size: 17px;
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
@@ -53,24 +59,28 @@ header {
   background-color: var(--field); color: var(--bone);
   padding: 1.6rem 1.5rem; border-bottom: 1px solid var(--ink);
 }
-header .rvt { width: 7px; height: 7px; }
-header .rvt.tl { top: 12px; left: 14px; }
-header .rvt.tr { top: 12px; right: 14px; }
-header .rvt.bl { bottom: 12px; left: 14px; }
-header .rvt.br { bottom: 12px; right: 14px; }
+/* Header rivets sit slightly larger and further in than the generic .riveted
+   box. These MUST qualify the element with .riveted: a bare `header .rvt.tl`
+   is (0,2,1) and loses to `.riveted .rvt.tl` at (0,3,0), which is why these
+   overrides silently did nothing for as long as they existed. */
+header.riveted .rvt { width: 7px; height: 7px; }
+header.riveted .rvt.tl { top: 12px; left: 14px; }
+header.riveted .rvt.tr { top: 12px; right: 14px; }
+header.riveted .rvt.bl { bottom: 12px; left: 14px; }
+header.riveted .rvt.br { bottom: 12px; right: 14px; }
 
 .lockup { display: flex; align-items: center; justify-content: center; gap: 1.1rem; flex-wrap: wrap; }
 .lockup a { display: flex; align-items: center; gap: 1.1rem; text-decoration: none; }
 .shield { width: 54px; height: auto; display: block; flex-shrink: 0; }
 .lockup-text { text-align: left; }
 .wordmark {
-  font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 600;
+  font-family: var(--font-condensed); font-weight: 600;
   text-transform: uppercase; letter-spacing: 0.16em;
   font-size: clamp(1.4rem, 3.5vw, 1.9rem); line-height: 1; color: var(--bone);
 }
 .wordmark-rule { width: calc(100% + 18px); margin: 0.5rem 0 0.4rem -9px; }
 .subline {
-  font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 500;
+  font-family: var(--font-condensed); font-weight: 500;
   text-transform: uppercase; letter-spacing: 0.34em;
   font-size: 0.68rem; color: var(--rule);
 }
@@ -78,7 +88,7 @@ header .rvt.br { bottom: 12px; right: 14px; }
 /* ── FOOTER ── */
 footer {
   background-color: var(--ink-mid); color: var(--rule); text-align: center;
-  padding: 1.6rem; font-family: 'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif; font-weight: 500;
+  padding: 1.6rem; font-family: var(--font-condensed); font-weight: 500;
   font-size: 0.84rem; letter-spacing: 0.14em; border-top: 1px solid var(--field);
 }
 

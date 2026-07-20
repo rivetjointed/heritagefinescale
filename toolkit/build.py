@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
-"""HFS reference-page generator. One template, one CSS, config-driven.
+"""HFS reference-page generator. One template, config-driven.
 
 build(cfg) -> writes cfg['out'] and returns stats.
+
+Emits a page that LINKS its stylesheets (/style.css + the family sheet) rather
+than inlining them, and that leaves the primary nav to nav.js via an empty
+<div id="site-nav"></div>. Both were true of the hand-migrated pages already;
+this generator now matches them, so a rebuild is a no-op rather than a
+regression. Do not reintroduce an inline <style> block or a hard-coded nav.
 
 cfg keys:
   md_text     str  preprocessed markdown (years + Notes; no ## Framework/## Scope)
   out         str  output path
+  page_css    str  family stylesheet to link beside style.css
+                   (default "chronology.css")
   title,kicker,deck,meta_desc   str
   series_label str   e.g. "European Theater"
   marking     "flags" | "insignia"
@@ -199,37 +207,9 @@ def render_banner(cfg):
 
 TOTOP = '<a class="totop" href="#top" aria-label="Back to top">&uarr; Top</a>'
 
-# Operations series — order: European, Eastern (coming), Pacific, Med/ME, European Air.
-THEATERS = [
-    ("/operations/european-theater-1939-1945.html", "European Theater"),
-    ("/operations/eastern-front-1938-1945.html", "Eastern Front"),
-    ("/operations/pacific-theater-1941-1945.html", "Pacific Theater"),
-    ("/operations/mediterranean-middle-east-1940-1945.html", "Mediterranean &amp; Middle East"),
-    ("/operations/european-air-war-1939-1945.html", "European Air War"),
-]
-
-def render_topnav(active_file):
-    items = []
-    for href, label in THEATERS:
-        if href is None:
-            items.append('        <li><span class="soon">{} <em>Soon</em></span></li>'.format(label))
-        else:
-            cls = ' class="active"' if os.path.basename(href) == active_file else ""
-            items.append('        <li><a href="{}"{}>{}</a></li>'.format(href, cls, label))
-    return """  <nav aria-label="Primary navigation">
-    <ul>
-      <li><a href="/#services">Services</a></li>
-      <li class="has-sub">
-        <a href="/operations/european-theater-1939-1945.html" aria-haspopup="true">Operations</a>
-        <ul class="subnav">
-{theaters}
-        </ul>
-      </li>
-      <li><a href="/dossiers/ju87-picchiatello.html">Dossiers</a></li>
-      <li><a href="/#about">About</a></li>
-      <li><a href="/#contact">Get in Touch</a></li>
-    </ul>
-  </nav>""".format(theaters="\n".join(items))
+# NOTE: this generator does NOT render the primary nav. nav.js owns it, and is
+# the single source of truth — the page ships an empty <div id="site-nav"></div>
+# that nav.js replaces at load. Adding a page means editing nav.js, nothing here.
 
 def render_framework(fw):
     if not fw: return ""
@@ -260,9 +240,6 @@ def render_addendum(ad):
     </div>
   </section>""".format(aid=aid, title=inline(a["title"]), rows=field_rows(a["fields"]), tt=TOTOP))
     return "".join(out)
-
-CSS = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "style.css"),
-           encoding="utf-8").read()
 
 SHIELD = '''<svg class="shield" viewBox="0 0 120 144" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Heritage Fine Scale">
           <path d="M24,14 L96,14 L106,24 L106,72 C106,102 86,126 60,138 C34,126 14,102 14,72 L14,24 Z" fill="#16110A" stroke="#CFC4AA" stroke-width="1.4"/>
@@ -318,8 +295,8 @@ def build(cfg):
         h1 = '{}<span class="h1-range">{}</span>'.format(h1, cfg["years"])
 
     page = PAGE.format(
-        css=CSS, defs=sprites.defs_svg(), shield=SHIELD,
-        topnav=render_topnav(os.path.basename(cfg["out"])),
+        defs=sprites.defs_svg(), shield=SHIELD,
+        page_css=cfg.get("page_css", "chronology.css"),
         title=cfg["title"], meta_desc=cfg["meta_desc"],
         kicker=cfg["kicker"], h1=h1, deck=cfg["deck"],
         banner=render_banner(cfg), yearnav=yearnav,
@@ -352,7 +329,8 @@ PAGE = """<!DOCTYPE html>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@400;500;600;700&family=Roboto+Condensed:ital,wght@0,400;0,500;0,600;0,700&family=Noto+Sans+JP:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
-  <style>{css}</style>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/{page_css}" />
 </head>
 <body>
 
@@ -373,7 +351,7 @@ PAGE = """<!DOCTYPE html>
     </div>
   </header>
 
-{topnav}
+  <div id="site-nav"></div>
 
   <main class="article intro">
     <p class="kicker">{kicker}</p>
@@ -417,6 +395,8 @@ PAGE = """<!DOCTYPE html>
       t();
     }})();
   </script>
+
+  <script src="/nav.js" defer></script>
 
 </body>
 </html>

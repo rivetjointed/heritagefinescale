@@ -1,0 +1,39 @@
+# robots.txt  —  place at https://heritagefinescale.com/robots.txt  (site root, not the /sourdough folder)
+#
+# This is a polite request. Google, OpenAI, Common Crawl and Anthropic all say they honor it;
+# rogue scrapers ignore it. The real "unfindable in search" lever is the noindex tag on the page
+# itself (already added to index.html) — see the note at the bottom about Googlebot.
+#
+# Rules are scoped to /sourdough so the rest of heritagefinescale.com is untouched.
+# If you already have a robots.txt, MERGE these groups into it rather than overwriting.
+
+# --- Google search indexing ---
+User-agent: Googlebot
+Disallow: /sourdough
+
+# --- Google generative-AI training (Gemini/Vertex) — separate from search ---
+User-agent: Google-Extended
+Disallow: /sourdough
+
+# --- OpenAI training crawler ---
+User-agent: GPTBot
+Disallow: /sourdough
+
+# --- Common Crawl (feeds many open-source LLMs) ---
+User-agent: CCBot
+Disallow: /sourdough
+
+# --- Anthropic — explicitly allowed (you don't mind ClaudeBot) ---
+User-agent: ClaudeBot
+Allow: /sourdough
+
+# ---------------------------------------------------------------------------
+# NOTE on Googlebot + noindex:
+# The surest way to keep the page OUT of Google results is the noindex tag on
+# the page, which only works if Googlebot is ALLOWED to crawl and read it.
+# The "Disallow: /sourdough" above blocks Googlebot from crawling — belt-and-
+# suspenders — but because it then can't read the noindex, a bare URL could
+# still surface if someone links to the page. If total search invisibility
+# matters more than hard-blocking the crawler, delete the two Googlebot lines
+# above and let the noindex tag do the work.
+# ---------------------------------------------------------------------------
