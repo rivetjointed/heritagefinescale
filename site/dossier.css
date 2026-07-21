@@ -228,7 +228,21 @@
 }
 
 /* --- html.plain: accessible, full-width --- */
-html.plain .dossier-bio { font-size: 18px; }
+
+/* Larger text, top to bottom. The compact view sizes body prose in px and
+   every heading/label in rem; the accessible view must lift all of it, so
+   each text element is scaled explicitly here (a bigger .dossier-bio alone
+   only touches the prose that inherits from it). */
+html.plain .dossier-bio { font-size: 21px; line-height: 1.85; }
+html.plain .dossier-bio .kicker            { font-size: 1rem; }
+html.plain .dossier-bio h1                 { font-size: clamp(2.1rem, 5vw, 3rem); }
+html.plain .dossier-bio .data-block-title  { font-size: 1.02rem; }
+html.plain .dossier-bio .data-grid dt      { font-size: 1rem; }
+html.plain .dossier-bio .data-grid dd      { font-size: 1.2rem; }
+html.plain .dossier-bio .brief-section h2  { font-size: 1.7rem; }
+html.plain .dossier-bio .section-subhead   { font-size: 1.18rem; }
+html.plain .dossier-bio blockquote cite    { font-size: 0.95rem; }
+
 html.plain .dossier-bio .plate,
 html.plain .dossier-bio .plate.left,
 html.plain .dossier-bio .plate.portrait,
@@ -240,7 +254,7 @@ html.plain .dossier-bio .plate-row.left {
 html.plain .dossier-bio .plate.portrait { max-width: 460px; margin-left: auto; margin-right: auto; }
 html.plain .dossier-bio .plate.narrow   { max-width: 300px; margin-left: auto; margin-right: auto; }
 html.plain .dossier-bio .plate-row { gap: 1.1rem; }
-html.plain .dossier-bio .plate figcaption { font-size: 0.9rem; }
+html.plain .dossier-bio .plate figcaption { font-size: 1.05rem; }
 
 /* --- view toggle control --- */
 .view-toggle { text-align: right; margin: 0 0 1.6rem; }
