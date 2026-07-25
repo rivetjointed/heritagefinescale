@@ -6,6 +6,10 @@
 !/site/
 !/toolkit/
 
+# Build scratch inside the whitelisted toolkit/ dir
+/toolkit/__pycache__/
+/toolkit/_rebuild/
+
 # Repo config
 !/.gitignore
 !/.gitattributes

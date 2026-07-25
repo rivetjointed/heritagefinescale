@@ -1,11 +1,50 @@
 #!/usr/bin/env python3
+"""Regenerate the operations reference pages from the source lists.
+
+    python toolkit/make_all.py            # build to toolkit/_rebuild/ and report drift
+    python toolkit/make_all.py --write    # overwrite the live pages in site/operations/
+
+Paths resolve relative to this file, so it runs from anywhere. Sources are the
+WWII-List*.md files in other/ (the inbound folder: gitignored, 404'd, never
+deployed).
+
+WHY THE DEFAULT DOES NOT TOUCH THE LIVE SITE. This script had hardcoded
+/mnt/user-data/ paths from wherever it was first written and could not run here
+at all. Repointing it revealed that the generator is behind the published pages,
+so a straight rebuild is a REGRESSION, not the no-op the docstring in build.py
+assumes. As of 2026-07-25 it would undo, across all five theatre pages:
+
+  * the em-dash cleanup. Published prose uses colons and restructured
+    sentences, the generator still emits em dashes (house rule: no em dashes)
+  * "programme" -> "program", applied by hand to the published pages
+  * the shield SVG font stack. Published carries the full
+    'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif;
+    the generator emits a truncated 'Barlow Condensed', sans-serif. This is the
+    same fallback rot that style.css already warns about, happening again.
+  * flag symbols (mn, sk, es, bg, hr) the generator emits that the published
+    pages do not carry
+
+So the published pages are the source of truth for content, and this is a
+comparison tool until the generator is brought back in line. It builds to
+toolkit/_rebuild/ and tells you which pages differ. Use --write only once you
+have read that diff and actually want the generated version to win.
+"""
 import sys, os
-sys.path.insert(0, "hfs")
-import build, preprocess as pp
 from collections import OrderedDict
 
-U = "/mnt/user-data/uploads/"
-OUT = "/mnt/user-data/outputs/operations/"
+HERE = os.path.dirname(os.path.abspath(__file__))
+REPO = os.path.dirname(HERE)
+sys.path.insert(0, HERE)
+import build, preprocess as pp
+
+WRITE_LIVE = "--write" in sys.argv
+LIVE = os.path.join(REPO, "site", "operations") + os.sep
+STAGE = os.path.join(HERE, "_rebuild") + os.sep
+
+# Source markdown lives in the inbound folder.
+U = os.path.join(REPO, "other") + os.sep
+OUT = LIVE if WRITE_LIVE else STAGE
+os.makedirs(OUT, exist_ok=True)
 read = lambda p: open(p, encoding="utf-8").read()
 
 # ---------- shared framework prose ----------
@@ -237,11 +276,48 @@ ef_cfg["section_labels"] = {
 }
 results["eastern"] = build.build(ef_cfg)
 
-# ===== sprite sheet to outputs =====
+# ===== sprite sheet =====
+# Optional. cairosvg needs a native Cairo build that is awkward on Windows, and
+# nothing in site/ references this PNG — it is a reference sheet for our own use,
+# which is why it lives beside the toolkit rather than in the deploy. Skipping it
+# must not take the page rebuild down with it.
 import sprites
-import cairosvg
-cairosvg.svg2png(bytestring=sprites.sheet_svg().encode(),
-                 write_to=OUT+"hfs-marking-library.png", output_width=1560)
+try:
+    import cairosvg
+except ImportError:
+    print("skipped sprite sheet: cairosvg not installed (pip install cairosvg)")
+else:
+    cairosvg.svg2png(bytestring=sprites.sheet_svg().encode(),
+                     write_to=os.path.join(HERE, "hfs-marking-library.png"),
+                     output_width=1560)
+    print("sprite sheet -> toolkit/hfs-marking-library.png")
 
 for k, r in results.items():
     print(k, "->", os.path.basename(r["out"]), "| entries", r["entries"], "| years", r["years"])
+
+# ===== drift report =====
+if WRITE_LIVE:
+    print("\nwrote directly to site/operations/: check `git diff` before committing.")
+else:
+    print(f"\nbuilt to {os.path.relpath(STAGE, REPO)} (nothing live was touched)")
+    same, differ, absent = [], [], []
+    for r in results.values():
+        name = os.path.basename(r["out"])
+        live = os.path.join(LIVE, name)
+        if not os.path.exists(live):
+            absent.append(name)
+        elif read(os.path.join(STAGE, name)) == read(live):
+            same.append(name)
+        else:
+            differ.append(name)
+
+    for label, group in (("matches live", same), ("DIFFERS from live", differ),
+                         ("not published yet", absent)):
+        if group:
+            print(f"\n{label}: {len(group)}")
+            for name in group:
+                print(f"  {name}")
+
+    if differ:
+        print("\nThe generator is behind the published pages: see this file's docstring.\n"
+              "Do NOT --write to resolve this. Fix the generator to match the pages.")
