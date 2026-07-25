@@ -8,26 +8,27 @@ Paths resolve relative to this file, so it runs from anywhere. Sources are the
 WWII-List*.md files in other/ (the inbound folder: gitignored, 404'd, never
 deployed).
 
-WHY THE DEFAULT DOES NOT TOUCH THE LIVE SITE. This script had hardcoded
-/mnt/user-data/ paths from wherever it was first written and could not run here
-at all. Repointing it revealed that the generator is behind the published pages,
-so a straight rebuild is a REGRESSION, not the no-op the docstring in build.py
-assumes. As of 2026-07-25 it would undo, across all five theatre pages:
+WHY THE DEFAULT DOES NOT TOUCH THE LIVE SITE. Run with no arguments, this builds
+to toolkit/_rebuild/ and tells you which pages differ from what is published.
+That report IS the regression test: the rebuild is meant to be a no-op, so
+"matches live: 5" means the generator and the pages still agree. Anything else
+means one of them has moved and you need to know which before you overwrite
+anything. Use --write once you have read that and want the generated pages to
+win.
 
-  * the em-dash cleanup. Published prose uses colons and restructured
-    sentences, the generator still emits em dashes (house rule: no em dashes)
-  * "programme" -> "program", applied by hand to the published pages
-  * the shield SVG font stack. Published carries the full
-    'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif;
-    the generator emits a truncated 'Barlow Condensed', sans-serif. This is the
-    same fallback rot that style.css already warns about, happening again.
-  * flag symbols (mn, sk, es, bg, hr) the generator emits that the published
-    pages do not carry
+This mattered. The script originally had hardcoded /mnt/user-data/ paths and
+could not run at all, and while it sat unrunnable the pages were hand-edited
+away from it. When it was repointed on 2026-07-25 a straight rebuild would have
+silently reverted, across all five theatre pages: the em-dash cleanup (589
+lines), British spellings the pages had Americanised (programme, armoured,
+defence, labour, -ise endings, theatre, centre), and PoWs capitalisation. Those
+edits were judgement calls, not rules, so they were lifted back into these
+sources verbatim rather than re-derived.
 
-So the published pages are the source of truth for content, and this is a
-comparison tool until the generator is brought back in line. It builds to
-toolkit/_rebuild/ and tells you which pages differ. Use --write only once you
-have read that diff and actually want the generated version to win.
+KEEPING IT THAT WAY. Prose belongs in the sources, never in the published HTML.
+If you hand-edit a page in site/operations/, this script will overwrite it the
+next time anyone runs --write, and the edit is gone. Edit other/WWII-List*.md or
+the constants below, then rebuild.
 """
 import sys, os
 from collections import OrderedDict
@@ -50,43 +51,55 @@ read = lambda p: open(p, encoding="utf-8").read()
 # ---------- shared framework prose ----------
 def structure(_=None):
     return ("Entries are grouped by calendar year and ordered by date of first major action; "
-            "multi-year efforts are bracketed at their opening as campaign or programme brackets. "
-            "Each entry follows the same three-field anatomy — Forces, Intent, Outcome — the skeleton "
+            "multi-year efforts are bracketed at their opening as campaign or program brackets. "
+            "Each entry follows the same three-field anatomy (Forces, Intent, Outcome), the skeleton "
             "the dossiers use, so the reference and the long-form briefs read in one register. Allied "
             "codenames carry the entry title; Axis codenames are set in italic where the scholarship "
             "attests them.")
 
 def doctrine(_=None):
     return ("Inclusion is by consequence, not by drama: an action earns an entry if it changed the "
-            "shape of the theater, whether or not it is famous. The through-line is the house argument "
-            "— the gap between what gets remembered and what actually mattered — applied at theater "
+            "shape of the theater, whether or not it is famous. The through-line is the house argument, "
+            "the gap between what gets remembered and what actually mattered, applied at theater "
             "scale. Treatment is evenhanded; Axis intent and outcome are stated as the Axis command "
             "understood them. Scope edges are deliberate: operations outside this theater appear only "
             "where they touch it directly.")
 
+
+# The air volume closes its Doctrine block with a sentence that itself ends on
+# "evenhandedly", so the earlier "evenhanded" was reworded rather than repeat the
+# word in one paragraph. That is a real difference in the published page, not drift.
+def doctrine_air():
+    return doctrine().replace(
+        "Treatment is evenhanded;",
+        "Treatment is handled without favoring either side;")
+
 FW = {}
 FW["european"] = [
-("Framework", "This is the Western European and Atlantic volume of Heritage Fine Scale's operational reference: a chronological index of the campaigns, raids, programmes, and summits that set the shape of the war in Western Europe and on the Atlantic, from the diplomatic rupture of March 1939 to the German surrender in May 1945. It is a reference, not a narrative — entries are sorted by start date and stated in the terms an operation was planned and judged in, so a builder can place a subject in the actual record rather than in the box-art summary."),
+("Framework", "This is the Western European and Atlantic volume of Heritage Fine Scale's operational reference: a chronological index of the campaigns, raids, programs, and summits that set the shape of the war in Western Europe and on the Atlantic, from the diplomatic rupture of March 1939 to the German surrender in May 1945. It is a reference, not a narrative: entries are sorted by start date and stated in the terms an operation was planned and judged in, so a builder can place a subject in the actual record rather than in the box-art summary."),
  ("Structure", structure()),
  ("Doctrine", doctrine()),
- ("Operational Outcomes", "Read in order, the theater resolves into a recognizable shape. 1939 is the rupture and the Phoney War. 1940 is collapse and survival — Norway, France, Dunkirk, and the first blows struck to stay in the war at all. 1941 through 1943 is the stretch popular memory skips: the war was not held or lost on a beach but on the convoy routes, where the Atlantic was kept by inches while the cross-Channel force was built. 1944 is the return and the decisive year — Normandy, the breakout, the pursuit, and the costly autumn behind it. 1945 is the close, run at speed across the Rhine to surrender. For the modeler, that arc is the point: it tells you what a subject was actually doing in the war, the first thing an authentic build has to get right and the last thing the box will tell you."),
+ ("Operational Outcomes", "Read in order, the theater resolves into a recognizable shape. 1939 is the rupture and the Phoney War. 1940 is collapse and survival: Norway, France, Dunkirk, and the first blows struck to stay in the war at all. 1941 through 1943 is the stretch popular memory skips: the war was not held or lost on a beach but on the convoy routes, where the Atlantic was kept by inches while the cross-Channel force was built. 1944 is the return and the decisive year: Normandy, the breakout, the pursuit, and the costly autumn behind it. 1945 is the close, run at speed across the Rhine to surrender. For the modeler, that arc is the point: it tells you what a subject was actually doing in the war, the first thing an authentic build has to get right and the last thing the box will tell you."),
 ]
 FW["pacific"] = [
-("Framework", "This is the Pacific volume of Heritage Fine Scale's operational reference: a chronological index of the naval, air, and amphibious land operations of the Pacific and South-West Pacific, from Pearl Harbor in December 1941 to the surrender in Tokyo Bay in September 1945. It is a reference, not a narrative — entries are sorted by start date and stated in the terms an operation was planned and judged in."),
+("Framework", "This is the Pacific volume of Heritage Fine Scale's operational reference: a chronological index of the naval, air, and amphibious land operations of the Pacific and South-West Pacific, from Pearl Harbor in December 1941 to the surrender in Tokyo Bay in September 1945. It is a reference, not a narrative: entries are sorted by start date and stated in the terms an operation was planned and judged in."),
  ("Structure", structure()),
  ("Doctrine", doctrine()),
- ("Operational Outcomes", "Read in order, the theater resolves into a recognizable shape. 1941–42 is Japanese expansion and a run of Allied catastrophes — the Philippines, Malaya, the East Indies — checked at the Coral Sea and broken at Midway, the hinge of the whole war. 1942–43 is the attritional grind of Guadalcanal and New Guinea, where the initiative changed hands for good. 1943–44 is the two-axis advance — the Central Pacific island chain and MacArthur's South-West Pacific drive — converging on the Marianas and Leyte, where the Imperial Navy was destroyed as a fighting force. 1945 is the close at Iwo Jima and Okinawa, the bombing and blockade of the Home Islands, and the surrender. For the modeler, that arc places a subject in the war rather than on a shelf."),
+ ("Operational Outcomes", "Read in order, the theater resolves into a recognizable shape. 1941–42 is Japanese expansion and a run of Allied catastrophes (the Philippines, Malaya, the East Indies) checked at the Coral Sea and broken at Midway, the hinge of the whole war. 1942–43 is the attritional grind of Guadalcanal and New Guinea, where the initiative changed hands for good. 1943–44 is the two-axis advance, the Central Pacific island chain and MacArthur's South-West Pacific drive, converging on the Marianas and Leyte, where the Imperial Navy was destroyed as a fighting force. 1945 is the close at Iwo Jima and Okinawa, the bombing and blockade of the Home Islands, and the surrender. For the modeler, that arc places a subject in the war rather than on a shelf."),
 ]
 FW["med"] = [
-("Framework", "This is the Mediterranean and Middle East volume of Heritage Fine Scale's operational reference: the ground, naval, and air campaigns of the inland sea and its approaches — North Africa and the Western Desert, Malta and the convoy war, Greece, Crete, the Dodecanese, the Levant, Iraq and Iran, Sicily and the long Italian campaign — from 1940 to 1945. It is a reference, not a narrative; entries are sorted by start date and stated in the terms an operation was planned and judged in."),
+("Framework", "This is the Mediterranean and Middle East volume of Heritage Fine Scale's operational reference: the ground, naval, and air campaigns of the inland sea and its approaches (North Africa and the Western Desert, Malta and the convoy war, Greece, Crete, the Dodecanese, the Levant, Iraq and Iran, Sicily and the long Italian campaign) from 1940 to 1945. It is a reference, not a narrative; entries are sorted by start date and stated in the terms an operation was planned and judged in."),
  ("Structure", structure()),
+ # Literal curly quotes, not &lsquo;/&rsquo;. inline() escapes & to &amp; before
+ # anything else, so an entity written here would ship as visible "&amp;lsquo;".
+ # The published page carries the entities; these characters render identically.
  ("Doctrine", doctrine() + " This is the theater where Allied tactical air doctrine was forged and where the ‘periphery’ argument is most directly tested."),
- ("Operational Outcomes", "Read in order, the theater resolves into a recognizable shape. 1940 is Italian overreach and the first lopsided British victories in the desert and at Taranto. 1941 is the German intervention that changed the math — the loss of Greece and Crete, the arrival of the Afrikakorps, and the see-saw fighting in Cyrenaica. 1942 is the crisis at Gazala and Tobruk and the turn at El Alamein, then the clearing of Africa and the move to Sicily. 1943 through 1945 is the grinding Italian campaign — Salerno, Anzio, Cassino, the Gothic Line — that tied down German divisions to the end while the decision moved north. For the modeler, that arc explains why a desert or Italian-front subject looks and fought the way it did."),
+ ("Operational Outcomes", "Read in order, the theater resolves into a recognizable shape. 1940 is Italian overreach and the first lopsided British victories in the desert and at Taranto. 1941 is the German intervention that changed the math: the loss of Greece and Crete, the arrival of the Afrikakorps, and the see-saw fighting in Cyrenaica. 1942 is the crisis at Gazala and Tobruk and the turn at El Alamein, then the clearing of Africa and the move to Sicily. 1943 through 1945 is the grinding Italian campaign (Salerno, Anzio, Cassino, the Gothic Line) that tied down German divisions to the end while the decision moved north. For the modeler, that arc explains why a desert or Italian-front subject looked and fought the way it did."),
 ]
 FW["air"] = [
-("Framework", "This is the European air-war volume of Heritage Fine Scale's operational reference: the strategic bombing offensive, the air-defense battles, tactical and maritime air, and the airborne lifts over Western Europe, from the opening sorties of 1939 to the final offensives of 1945. It is a reference, not a narrative. Markings here are shown as air-arm insignia rather than national flags — the air war's native idiom."),
+("Framework", "This is the European air-war volume of Heritage Fine Scale's operational reference: the strategic bombing offensive, the air-defense battles, tactical and maritime air, and the airborne lifts over Western Europe, from the opening sorties of 1939 to the final offensives of 1945. It is a reference, not a narrative. Markings here are shown as air-arm insignia rather than national flags: the air war's native idiom."),
  ("Structure", structure()),
- ("Doctrine", doctrine() + " The bomber-offensive argument — area against precision, and the cost of both — is treated evenhandedly."),
+ ("Doctrine", doctrine_air() + " The bomber-offensive argument (area against precision, and the cost of both) is treated evenhandedly."),
  ("Operational Outcomes", "Read in order, the campaign resolves into a recognizable shape. 1939–40 is the early probing and the Battle of Britain, the first defensive victory of the war. 1941–42 is the turn to night area bombing and the long build-up of force. 1943 is Pointblank and the crisis of unescorted daylight bombing, paid for over Schweinfurt and Regensburg. 1944 is the arrival of the long-range escort, air supremacy won before Overlord, and the tactical air war that followed the armies across France. 1945 is the final offensives against a collapsing defense. For the modeler, that arc fixes what a given airframe was doing, in what company, and against what."),
 ]
 
@@ -96,7 +109,7 @@ def cfg_common(marking):
 
 SCOPE = {
  "european": [
-   ("Scope", "US / UK / Commonwealth and Allied (Polish, Free French, Norwegian, Belgian, Dutch, Czechoslovak) formations in Western Europe and on the Atlantic — ground campaigns and naval operations."),
+   ("Scope", "US / UK / Commonwealth and Allied (Polish, Free French, Norwegian, Belgian, Dutch, Czechoslovak) formations in Western Europe and on the Atlantic: ground campaigns and naval operations."),
    ("Period", "March 1939 – May 1945."),
    ("Sort", "By start date; range shown in each entry. Multi-year campaigns bracketed at their first major action."),
    ("Codenames", "Allied codenames in entry titles; Axis codenames italicized where commonly attested."),
@@ -108,13 +121,13 @@ SCOPE = {
    ("Codenames", "Allied codenames in entry titles; Axis codenames italicized where commonly attested."),
  ],
  "med": [
-   ("Scope", "The Mediterranean Theater (MTO), the Middle East Command theater, and the North African campaigns — ground, naval, and air operations."),
+   ("Scope", "The Mediterranean Theater (MTO), the Middle East Command theater, and the North African campaigns: ground, naval, and air operations."),
    ("Period", "June 1940 – May 1945."),
    ("Sort", "By start date; range shown in each entry."),
    ("Codenames", "Allied codenames in entry titles; Axis codenames italicized where commonly attested."),
  ],
  "air": [
-   ("Scope", "Air operations over Western Europe — strategic bombing, air defense, tactical and maritime air, and the airborne lifts."),
+   ("Scope", "Air operations over Western Europe: strategic bombing, air defense, tactical and maritime air, and the airborne lifts."),
    ("Period", "September 1939 – May 1945."),
    ("Sort", "By start date; range shown in each entry."),
    ("Codenames", "Allied codenames in entry titles; Axis codenames italicized where commonly attested."),
@@ -123,28 +136,28 @@ SCOPE = {
 
 BANNERS = {
  "european": dict(
-   banner_title="Belligerents — Western Europe &amp; the Atlantic",
+   banner_title="Belligerents: Western Europe &amp; the Atlantic",
    banner_note="National markings shown schematically; the German marking follows the period military cross used across this site rather than the era's national flag.",
    allied=[("us","United States"),("uk","United Kingdom"),("ca","Canada"),("fr","Free France"),
            ("pl","Poland"),("no","Norway"),("be","Belgium"),("nl","Netherlands"),
            ("cz","Czechoslovakia"),("su","Soviet Union")],
    axis=[("de","Germany")]),
  "pacific": dict(
-   banner_title="Belligerents — Pacific &amp; South-West Pacific",
+   banner_title="Belligerents: Pacific &amp; South-West Pacific",
    banner_note="National markings shown schematically; Japan is shown by the wartime naval ensign.",
    allied=[("us","United States"),("uk","United Kingdom"),("ca","Canada"),("au","Australia"),
            ("nz","New Zealand"),("in","British India"),("nl","Netherlands"),("cn","China"),
            ("ph","Philippines"),("su","Soviet Union")],
    axis=[("jp","Japan"),("th","Thailand")]),
  "med": dict(
-   banner_title="Belligerents — Mediterranean &amp; Middle East",
+   banner_title="Belligerents: Mediterranean &amp; Middle East",
    banner_note="National markings shown schematically; the German marking follows the period military cross. Iraq and Iran appear as the venues of the 1941 Levant and Persian-corridor actions rather than as Axis members.",
    allied=[("us","United States"),("uk","United Kingdom"),("au","Australia"),("nz","New Zealand"),
            ("in","British India"),("za","South Africa"),("fr","Free France"),("pl","Poland"),
            ("gr","Greece")],
    axis=[("de","Germany"),("it","Italy"),("vichy","France (Vichy)"),("iq","Iraq"),("ir","Iran")]),
  "air": dict(
-   banner_title="Air Arms — European Theater",
+   banner_title="Air Arms: European Theater",
    banner_note="Air-arm insignia shown schematically; Commonwealth air forces (RCAF, RAAF, RNZAF, SAAF) and the Fleet Air Arm flew under the RAF roundel. The Luftwaffe marking is the period military cross.",
    allied=[("ins-us","USAAF"),("ins-raf","RAF / Commonwealth"),("ins-ff","Free French"),
            ("ins-polish","Polish Air Force"),("ins-soviet","Soviet VVS")],
@@ -233,15 +246,15 @@ results["air"] = build.build(make_cfg(
 
 # ===== EASTERN FRONT =====
 FW["eastern"] = [
- ("Framework", "This is the Eastern Front volume of Heritage Fine Scale's operational reference: a chronological index of the German–Soviet war — the largest land war ever fought and the theater where the German army was destroyed — together with the Soviet Far East operations that bracket it, from Lake Khasan in 1938 to the Manchurian offensive of August 1945. It is a reference, not a narrative — entries are sorted by start date and stated in the terms an operation was planned and judged in, so a builder can place a subject in the actual record rather than in the box-art summary."),
- ("Structure", "Entries are grouped by calendar year and ordered by date of first major action; multi-year efforts are bracketed at their opening as campaign or programme brackets. Two discrete sections precede the chronology by design — the Soviet–Japanese Far East unit, held together because its two border wars, its pact, and its 1945 offensive are one story; and the Soviet expansion of 1939–41, because the 1941 campaign reads incoherently without the Red Army's deployment posture explained. Each entry follows the same three-field anatomy — Forces, Intent, Outcome — the skeleton the dossiers use, so the reference and the long-form briefs read in one register. Soviet codenames are transliterated in entry titles with Cyrillic in parentheses; Axis codenames are set in italic where the scholarship attests them."),
- ("Doctrine", "Inclusion is by consequence, not by drama: an action earns an entry if it changed the shape of the theater, whether or not it is famous. The through-line is the house argument — the gap between what gets remembered and what actually mattered — applied here in every direction at once: Soviet constructed memory, the German memoir literature's clean-Wehrmacht and lost-victories constructions, and the national memories of the lands between. Treatment is evenhanded; Axis intent and outcome are stated as the Axis command understood them. The war's criminal dimension is carried structurally, in-chronology, where it belongs — not as adjunct but as planning premise; the second addendum below frames the pattern."),
- ("Operational Outcomes", "Read in order, the theater resolves into a recognizable shape. 1938–39 is the Far East proving ground — Khasan and Khalkhin Gol — that turned Japanese expansion south and auditioned Zhukov. 1939–41 is the expansion: Poland partitioned, the Winter War's costly verdict, the Baltic and Bessarabian annexations that set the 1941 start line. 1941 is catastrophe and survival — the frontier disasters, Kyiv and Vyazma, and the counteroffensive before Moscow that broke the campaign's premise. 1942 runs from the Kharkov and Crimean failures through Blau to Stalingrad, the war's hinge. 1943 is Kursk and the race to the Dnieper — the initiative changing hands for good. 1944 is the year of the ten blows: Bagration destroying Army Group Center, the Balkan collapse, the satellites changing sides. 1945 is Vistula–Oder, Berlin, and — three months after the German surrender, almost to the day — Manchuria. For the modeler, that arc is the point: it tells you what a subject was actually doing in the war, the first thing an authentic build has to get right and the last thing the box will tell you."),
+ ("Framework", "This is the Eastern Front volume of Heritage Fine Scale's operational reference: a chronological index of the German–Soviet war, the largest land war ever fought and the theater where the German army was destroyed, together with the Soviet Far East operations that bracket it, from Lake Khasan in 1938 to the Manchurian offensive of August 1945. It is a reference, not a narrative: entries are sorted by start date and stated in the terms an operation was planned and judged in, so a builder can place a subject in the actual record rather than in the box-art summary."),
+ ("Structure", "Entries are grouped by calendar year and ordered by date of first major action; multi-year efforts are bracketed at their opening as campaign or program brackets. Two discrete sections precede the chronology by design: the Soviet–Japanese Far East unit, held together because its two border wars, its pact, and its 1945 offensive are one story; and the Soviet expansion of 1939–41, because the 1941 campaign reads incoherently without the Red Army's deployment posture explained. Each entry follows the same three-field anatomy (Forces, Intent, Outcome), the skeleton the dossiers use, so the reference and the long-form briefs read in one register. Soviet codenames are transliterated in entry titles with Cyrillic in parentheses; Axis codenames are set in italic where the scholarship attests them."),
+ ("Doctrine", "Inclusion is by consequence, not by drama: an action earns an entry if it changed the shape of the theater, whether or not it is famous. The through-line is the house argument, the gap between what gets remembered and what actually mattered, applied here in every direction at once: Soviet constructed memory, the German memoir literature's clean-Wehrmacht and lost-victories constructions, and the national memories of the lands between. Treatment is evenhanded; Axis intent and outcome are stated as the Axis command understood them. The war's criminal dimension is carried structurally, in-chronology, where it belongs: not as adjunct but as planning premise; the second addendum below frames the pattern."),
+ ("Operational Outcomes", "Read in order, the theater resolves into a recognizable shape. 1938–39 is the Far East proving ground, Khasan and Khalkhin Gol, that turned Japanese expansion south and auditioned Zhukov. 1939–41 is the expansion: Poland partitioned, the Winter War's costly verdict, the Baltic and Bessarabian annexations that set the 1941 start line. 1941 is catastrophe and survival: the frontier disasters, Kyiv and Vyazma, and the counteroffensive before Moscow that broke the campaign's premise. 1942 runs from the Kharkov and Crimean failures through Blau to Stalingrad, the war's hinge. 1943 is Kursk and the race to the Dnieper: the initiative changing hands for good. 1944 is the year of the ten blows: Bagration destroying Army Group Center, the Balkan collapse, the satellites changing sides. 1945 is Vistula–Oder, Berlin, and (three months after the German surrender, almost to the day) Manchuria. For the modeler, that arc is the point: it tells you what a subject was actually doing in the war, the first thing an authentic build has to get right and the last thing the box will tell you."),
 ]
 SCOPE["eastern"] = [
  ("Scope", "Soviet forces and their co-belligerents against Germany and the Axis eastern coalition (Finland, Romania, Hungary, Slovakia, Italy's ARMIR, Spain's *División Azul*), plus the Soviet–Japanese Far East operations. Eastern naval (Baltic, Black Sea, Arctic coastal, river flotillas) and air operations folded in wholesale."),
  ("Period", "July 1938 – September 1945."),
- ("Sort", "By start date; range shown in each entry. Two discrete sections — the Far East unit and the Soviet Expansion of 1939–41 — precede the main chronology."),
+ ("Sort", "By start date; range shown in each entry. Two discrete sections, the Far East unit and the Soviet Expansion of 1939–41, precede the main chronology."),
  ("Codenames", "Soviet codenames transliterated in entry titles with Cyrillic in parentheses; Axis codenames italicized where commonly attested."),
 ]
 BANNERS["eastern"] = dict(

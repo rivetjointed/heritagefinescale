@@ -16,6 +16,14 @@ C:\\Sites\\linden\\tools\\attribution.py; it is inlined here rather than importe
 because that lives in a separate repo. If you change it there, change it here.
 Its CSS lives in site/style.css.
 
+"A rebuild is a no-op" is a claim worth re-checking rather than trusting: it was
+false for months while make_all.py could not run. `python toolkit/make_all.py`
+with no arguments now verifies it without touching anything. Two things in here
+are load-bearing for it: CONDENSED (the shield's font stack, which had already
+rotted to a truncated version once) and the exact whitespace of the page
+template, where a single stray blank line before </body> is a diff on every
+page.
+
 cfg keys:
   md_text     str  preprocessed markdown (years + Notes; no ## Framework/## Scope)
   out         str  output path
@@ -248,14 +256,22 @@ def render_addendum(ad):
   </section>""".format(aid=aid, title=inline(a["title"]), rows=field_rows(a["fields"]), tt=TOTOP))
     return "".join(out)
 
+# The condensed stack, written once. An SVG presentation attribute cannot read the
+# --font-condensed custom property, so this is the one place the stack is repeated
+# outside :root — and it had already rotted, emitting a truncated
+# "'Barlow Condensed', sans-serif" that dropped the Roboto Condensed and Noto Sans JP
+# fallbacks the published pages carry. Same failure style.css warns about. If
+# --font-condensed changes in style.css, change this to match.
+CONDENSED = "'Barlow Condensed', 'Roboto Condensed', 'Noto Sans JP', sans-serif"
+
 SHIELD = '''<svg class="shield" viewBox="0 0 120 144" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Heritage Fine Scale">
           <path d="M24,14 L96,14 L106,24 L106,72 C106,102 86,126 60,138 C34,126 14,102 14,72 L14,24 Z" fill="#16110A" stroke="#CFC4AA" stroke-width="1.4"/>
           <path d="M28,19 L92,19 L101,28 L101,71 C101,98 83,120 60,131 C37,120 19,98 19,71 L19,28 Z" fill="none" stroke="#CFC4AA" stroke-width="0.7" opacity="0.45"/>
-          <text x="42" y="60" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="31" fill="#F2ECDF">H</text>
-          <text x="60" y="83" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="31" fill="#F2ECDF">F</text>
-          <text x="78" y="106" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="700" font-size="31" fill="#F2ECDF">S</text>
+          <text x="42" y="60" text-anchor="middle" font-family="CONDENSED_STACK" font-weight="700" font-size="31" fill="#F2ECDF">H</text>
+          <text x="60" y="83" text-anchor="middle" font-family="CONDENSED_STACK" font-weight="700" font-size="31" fill="#F2ECDF">F</text>
+          <text x="78" y="106" text-anchor="middle" font-family="CONDENSED_STACK" font-weight="700" font-size="31" fill="#F2ECDF">S</text>
           <g fill="#6A2429"><circle cx="29" cy="21" r="2.3"/><circle cx="60" cy="19" r="2.3"/><circle cx="91" cy="21" r="2.3"/><circle cx="99" cy="50" r="2.3"/><circle cx="84" cy="104" r="2.3"/><circle cx="60" cy="127" r="2.3"/><circle cx="36" cy="104" r="2.3"/><circle cx="21" cy="50" r="2.3"/></g>
-        </svg>'''
+        </svg>'''.replace("CONDENSED_STACK", CONDENSED)
 
 import re as _re
 _DROP = _re.compile(
@@ -405,7 +421,6 @@ PAGE = """<!DOCTYPE html>
   </script>
 
   <script src="/nav.js" defer></script>
-
 </body>
 </html>
 """
