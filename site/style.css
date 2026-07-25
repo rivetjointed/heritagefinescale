@@ -92,6 +92,27 @@ footer {
   font-size: 0.84rem; letter-spacing: 0.14em; border-top: 1px solid var(--field);
 }
 
+/* ── ATTRIBUTION (Linden Street Studio) ─────────────────────────────
+   Doubled class = specificity 0,0,2,0, which outranks a host site's own
+   `footer a { color: … }` (0,0,1,1) without !important. color:inherit is
+   what stops this rendering as a link. No opacity — see attribution.py. */
+.lss-credit.lss-credit {
+  display: inline-flex; align-items: center; gap: 0.45em;
+  color: inherit; text-decoration: none;
+  font-size: 0.74rem;
+}
+.lss-credit.lss-credit:visited { color: inherit; }
+.lss-credit.lss-credit:hover,
+.lss-credit.lss-credit:focus-visible {
+  text-decoration: underline; text-underline-offset: 0.22em;
+}
+.lss-mark { fill: currentColor; flex: none; }
+
+/* HFS-local fit only. The block above is copied verbatim from
+   C:\Sites\linden\tools\attribution.py — keep it that way so drift is
+   visible, and put any site-specific adjustment down here instead. */
+footer .lss-credit.lss-credit { margin-top: 0.7rem; font-size: 0.72rem; }
+
 /* ── BACK-TO-TOP (floating) ── */
 .to-top {
   position: fixed; right: 1.1rem; bottom: 1.1rem; z-index: 40;

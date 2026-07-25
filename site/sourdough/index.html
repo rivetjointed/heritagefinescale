@@ -209,6 +209,32 @@
       line-height: 1;
     }
     #lb-close:hover { color: #fff; }
+
+    /* ── FOOTER + ATTRIBUTION (Linden Street Studio) ──
+       This page is fully self-contained and links no shared stylesheet, so the
+       credit rules are repeated here rather than inherited from /style.css.
+       Keep them in sync with C:\Sites\linden\tools\attribution.py.
+       position/z-index match .gallery so the footer clears the fixed mosaic. */
+    .page-footer {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 0.75rem 2.6rem;
+      text-align: center;
+      color: #b8a894;
+    }
+    .lss-credit.lss-credit {
+      display: inline-flex; align-items: center; gap: 0.45em;
+      color: inherit; text-decoration: none;
+      font-size: 0.74rem;
+    }
+    .lss-credit.lss-credit:visited { color: inherit; }
+    .lss-credit.lss-credit:hover,
+    .lss-credit.lss-credit:focus-visible {
+      text-decoration: underline; text-underline-offset: 0.22em;
+    }
+    .lss-mark { fill: currentColor; flex: none; }
   </style>
 </head>
 <body>
@@ -708,6 +734,10 @@
   <figcaption>Both loaves — finished</figcaption>
 </figure>
 </div>
+<footer class="page-footer">
+  <a class="lss-credit" href="https://lindenstreetstudio.com"><svg class="lss-mark" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.0 18.4 3.2 22.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/><g transform="translate(6.2,18.2) rotate(-10) scale(0.85)"><path d="M0 -0.55C4.2 -1.75 9.2 -2 13.4 -0.2 9.2 1.6 4.2 1.35 0 0.55Z"/></g><g transform="translate(5.8,17.6) rotate(35) scale(0.95) translate(-12,-17.8)"><path d="M12 2.2C13.4 6 16.4 8.4 16.4 12.2c0 2.4-.2 5.2-1.4 6.2-1 .8-2.4.2-3-.8-.7 1.2-2.3 1.8-3.3.9-1.3-1.1-1.5-4.1-1.5-6.6C7.2 8.1 10.6 6 12 2.2Z"/></g></svg>Created by Linden Street Studio</a>
+</footer>
+
 <div id="lightbox">
   <button id="lb-close" onclick="closeLb()">&#x2715;</button>
   <button class="lb-nav" id="lb-prev" onclick="showPrev()">&#8249;</button>

@@ -9,6 +9,13 @@ than inlining them, and that leaves the primary nav to nav.js via an empty
 this generator now matches them, so a rebuild is a no-op rather than a
 regression. Do not reintroduce an inline <style> block or a hard-coded nav.
 
+The footer carries the Linden Street Studio attribution credit, which must stay
+byte-identical to what the hand-migrated pages carry or a rebuild starts
+producing diffs. The credit's canonical source is
+C:\\Sites\\linden\\tools\\attribution.py; it is inlined here rather than imported
+because that lives in a separate repo. If you change it there, change it here.
+Its CSS lives in site/style.css.
+
 cfg keys:
   md_text     str  preprocessed markdown (years + Notes; no ## Framework/## Scope)
   out         str  output path
@@ -381,6 +388,7 @@ PAGE = """<!DOCTYPE html>
 
   <footer>
     <p>&copy; 2026 Heritage Fine Scale &nbsp;&middot;&nbsp; Portland, Oregon</p>
+    <a class="lss-credit" href="https://lindenstreetstudio.com"><svg class="lss-mark" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.0 18.4 3.2 22.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/><g transform="translate(6.2,18.2) rotate(-10) scale(0.85)"><path d="M0 -0.55C4.2 -1.75 9.2 -2 13.4 -0.2 9.2 1.6 4.2 1.35 0 0.55Z"/></g><g transform="translate(5.8,17.6) rotate(35) scale(0.95) translate(-12,-17.8)"><path d="M12 2.2C13.4 6 16.4 8.4 16.4 12.2c0 2.4-.2 5.2-1.4 6.2-1 .8-2.4.2-3-.8-.7 1.2-2.3 1.8-3.3.9-1.3-1.1-1.5-4.1-1.5-6.6C7.2 8.1 10.6 6 12 2.2Z"/></g></svg>Created by Linden Street Studio</a>
   </footer>
 
   <script>
