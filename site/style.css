@@ -109,7 +109,7 @@ footer {
 .lss-mark { fill: currentColor; flex: none; }
 
 /* HFS-local fit only. The block above is copied verbatim from
-   C:\Sites\linden\tools\attribution.py — keep it that way so drift is
+   C:\Work\Sites\linden\tools\attribution.py — keep it that way so drift is
    visible, and put any site-specific adjustment down here instead. */
 footer .lss-credit.lss-credit { margin-top: 0.7rem; font-size: 0.72rem; }
 

@@ -12,7 +12,7 @@ regression. Do not reintroduce an inline <style> block or a hard-coded nav.
 The footer carries the Linden Street Studio attribution credit, which must stay
 byte-identical to what the hand-migrated pages carry or a rebuild starts
 producing diffs. The credit's canonical source is
-C:\\Sites\\linden\\tools\\attribution.py; it is inlined here rather than imported
+C:\\Work\\Sites\\linden\\tools\\attribution.py; it is inlined here rather than imported
 because that lives in a separate repo. If you change it there, change it here.
 Its CSS lives in site/style.css.
 
