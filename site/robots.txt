@@ -4,28 +4,33 @@
 # rogue scrapers ignore it. The real "unfindable in search" lever is the noindex tag on the page
 # itself (already added to index.html) — see the note at the bottom about Googlebot.
 #
-# Rules are scoped to /sourdough so the rest of heritagefinescale.com is untouched.
+# Rules are scoped to /sourdough and /ham-and-bean-soup so the rest of heritagefinescale.com is untouched.
 # If you already have a robots.txt, MERGE these groups into it rather than overwriting.
 
 # --- Google search indexing ---
 User-agent: Googlebot
 Disallow: /sourdough
+Disallow: /ham-and-bean-soup
 
 # --- Google generative-AI training (Gemini/Vertex) — separate from search ---
 User-agent: Google-Extended
 Disallow: /sourdough
+Disallow: /ham-and-bean-soup
 
 # --- OpenAI training crawler ---
 User-agent: GPTBot
 Disallow: /sourdough
+Disallow: /ham-and-bean-soup
 
 # --- Common Crawl (feeds many open-source LLMs) ---
 User-agent: CCBot
 Disallow: /sourdough
+Disallow: /ham-and-bean-soup
 
 # --- Anthropic — explicitly allowed (you don't mind ClaudeBot) ---
 User-agent: ClaudeBot
 Allow: /sourdough
+Allow: /ham-and-bean-soup
 
 # ---------------------------------------------------------------------------
 # NOTE on Googlebot + noindex:
