@@ -66,24 +66,6 @@
     '  margin-top: 0.3rem; border-top: 1px solid rgba(196,184,154,0.18);\n' +
     '}\n' +
     '\n' +
-    '/* Companion pages nested under a dropdown item (e.g. a dossier and its companion).\n' +
-    '   Hidden until the parent row is hovered or focused, or holds the current page. */\n' +
-    'nav .subnav li.has-child { position: relative; }\n' +
-    'nav .subnav li.has-child > a::after { content: " \\25BE"; font-size: 0.72em; opacity: 0.65; }\n' +
-    'nav .subsub { display: none; flex-direction: column; max-width: none; margin: 0; }\n' +
-    'nav .subnav li.has-child:hover > .subsub,\n' +
-    'nav .subnav li.has-child:focus-within > .subsub,\n' +
-    'nav .subnav li.has-child.open > .subsub { display: flex; }\n' +
-    'nav .subnav li.subnav-child a {\n' +
-    '  position: relative; padding: 0.45rem 1.2rem 0.5rem 2.35rem;\n' +
-    '  font-size: 0.7rem; letter-spacing: 0.12em; color: var(--metal);\n' +
-    '}\n' +
-    'nav .subnav li.subnav-child a::before {\n' +
-    '  content: ""; position: absolute; left: 1.3rem; top: 50%; width: 0.55rem; height: 1px;\n' +
-    '  background: var(--rule); opacity: 0.75;\n' +
-    '}\n' +
-    'nav .subnav li.subnav-child a:hover, nav .subnav li.subnav-child a.active { color: #fff; }\n' +
-    '\n' +
     '@media (max-width: 600px) {\n' +
     '  nav ul li a { padding: 0.7rem 1rem; font-size: 0.76rem; }\n' +
     '}\n';
@@ -117,29 +99,13 @@
 
   // ---- Dossiers dropdown (long-form briefs), in series order -----------------
   // Labelled by subject, matching the filename — not by the brief's title.
-  // An entry may carry `children`: companion pages that belong to that brief
-  // and would be orphans as top-level items. They render indented beneath it.
   var DOSSIERS = [
     { href: "/dossiers/ju87-picchiatello.html",        label: "Ju 87 Picchiatello" },
-    { href: "/dossiers/your-cooking-is-the-best.html", label: "Your Cooking Is The Best" },
-    { href: "/dossiers/he-wrote-home-every-day.html",         label: "He Wrote Home Every Day",
-      children: [
-        { href: "/dossiers/il-popolo-di-calamecca.html",   label: "Il Popolo di Calamecca" }
-      ] }
+    { href: "/dossiers/your-cooking-is-the-best.html", label: "Your Cooking Is The Best" }
   ];
 
   // First dossier link doubles as the Dossiers parent target.
   var DOSSIERS_PARENT = DOSSIERS[0].href;
-
-  // Every link in a dropdown, children included (for active-state checks).
-  function flatten(list) {
-    var out = [];
-    list.forEach(function (o) {
-      if (o.href) out.push(o);
-      if (o.children) out = out.concat(flatten(o.children));
-    });
-    return out;
-  }
 
   // ---- Top-level items. `anchor` => homepage section link --------------------
   var TOP = [
@@ -163,7 +129,7 @@
   // Is any item within a dropdown the current page? (drives parent active state)
   var opsActive = OPERATIONS.some(function (o) { return isActive(o.href); });
   var refActive = REFERENCE.some(function (o) { return o.href && isActive(o.href); });
-  var dsrActive = flatten(DOSSIERS).some(function (o) { return isActive(o.href); });
+  var dsrActive = DOSSIERS.some(function (o) { return isActive(o.href); });
 
   // ---- Build markup ----------------------------------------------------------
   function li(href, label, active) {
@@ -173,18 +139,7 @@
   function dropdownItem(label, parentHref, list, active) {
     var sub = list.map(function (o) {
       if (o.group) return '          <li class="subnav-head">' + o.group + '</li>';
-      if (!o.children) return '          ' + li(o.href, o.label, isActive(o.href));
-      // Children nest inside the parent row and show only while it is hovered or
-      // focused (or when one of them is the current page), like the top-level menus.
-      var childActive = o.children.some(function (ch) { return isActive(ch.href); });
-      var row = '          <li class="has-child' + (childActive ? ' open' : '') + '">' +
-                '<a href="' + o.href + '"' + (isActive(o.href) ? ' class="active"' : '') + '>' + o.label + '</a>\n' +
-                '            <ul class="subsub">\n';
-      o.children.forEach(function (ch) {
-        row += '              <li class="subnav-child"><a href="' + ch.href + '"' +
-               (isActive(ch.href) ? ' class="active"' : '') + '>' + ch.label + '</a></li>\n';
-      });
-      return row + '            </ul>\n          </li>';
+      return '          ' + li(o.href, o.label, isActive(o.href));
     }).join("\n");
     return '' +
       '      <li class="has-sub">\n' +
