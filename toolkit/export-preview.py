@@ -91,7 +91,10 @@ def convert(src_name, html, css, nav_js):
     for a, b in LINKS.items():
         html = html.replace(f'href="{a}"', f'href="{b}"')
     assert 'href="/' not in html.replace('href="https://', ""), "a root-absolute link survived"
-    html = re.sub(r"[ \t]*<!--.*?-->[ \t]*\n?", "", html, flags=re.S)
+    # A comment on its own line goes with its line; one inside a paragraph goes alone,
+    # so the words on either side keep the space between them.
+    html = re.sub(r"^[ \t]*<!--(?:(?!-->).)*-->[ \t]*\n", "", html, flags=re.S | re.M)
+    html = re.sub(r"[ \t]*<!--(?:(?!-->).)*-->", "", html, flags=re.S)
     html = re.sub(r"\n{3,}", "\n\n", html)
     return html
 
