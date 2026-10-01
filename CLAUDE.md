@@ -54,21 +54,16 @@ python toolkit/make_all.py --write   # overwrite site/operations/
 ```
 
 The default run is the regression test: a rebuild is meant to be a no-op, so read its
-drift report before ever passing `--write`. The docstrings in `make_all.py` and `build.py`
+drift report before ever passing `--write`. It must report `matches live: 5` before
+anything deploys, alongside the site audit. The docstrings in `make_all.py` and `build.py`
 explain what is load-bearing.
 
-**Broken as of 2026-09-27.** The script reads its sources from `other/`, which does not
-exist. The lists now sit in `toolkit/sources/` (untracked, dated 2026-09-16), and one name
-differs: the script wants `WWII-List3-Europe-Air_1.md`, the folder has
-`WWII-List3-Europe-Air.md`. Do not simply repoint it: first confirm those lists still
-rebuild the published pages with no drift. Fix this before touching the operations pages.
+Sources are the six markdown lists in `toolkit/sources/`, tracked in git. Prose edits to
+an operations page go there, never into the HTML.
 
-The operations volumes use British spelling on purpose (programme, armoured, theatre,
--ise endings). Those were judgement calls lifted into the sources. Do not Americanise them.
-
-`toolkit/HFS-operations-reference-HANDOFF.md` and `toolkit/toolkit.txt` are history from
-when the toolkit lived in a chat sandbox. They predate the Eastern Front volume and name
-paths that no longer exist. Read them for background, not instructions.
+American spelling throughout (production standards §4), except "PoW", which stays by
+Michael's call; proper names keep their own spelling (Grand Harbour, Labour). The volumes
+use colons in place of em dashes.
 
 ## Dossiers
 

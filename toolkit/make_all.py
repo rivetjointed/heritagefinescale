@@ -5,8 +5,7 @@
     python toolkit/make_all.py --write    # overwrite the live pages in site/operations/
 
 Paths resolve relative to this file, so it runs from anywhere. Sources are the
-WWII-List*.md files in other/ (the inbound folder: gitignored, 404'd, never
-deployed).
+markdown lists in toolkit/sources/, tracked here and never deployed.
 
 WHY THE DEFAULT DOES NOT TOUCH THE LIVE SITE. Run with no arguments, this builds
 to toolkit/_rebuild/ and tells you which pages differ from what is published.
@@ -16,18 +15,15 @@ means one of them has moved and you need to know which before you overwrite
 anything. Use --write once you have read that and want the generated pages to
 win.
 
-This mattered. The script originally had hardcoded /mnt/user-data/ paths and
-could not run at all, and while it sat unrunnable the pages were hand-edited
-away from it. When it was repointed on 2026-07-25 a straight rebuild would have
-silently reverted, across all five theatre pages: the em-dash cleanup (589
-lines), British spellings the pages had Americanised (programme, armoured,
-defence, labour, -ise endings, theatre, centre), and PoWs capitalisation. Those
-edits were judgement calls, not rules, so they were lifted back into these
-sources verbatim rather than re-derived.
+This has bitten twice. The pages were hand-edited while the script could not
+run, and later the sources sat in an untracked folder that was lost in a move.
+Both times the published pages were the only copy of the copy edits (colons for
+em dashes, American spelling), and both times they were lifted back into the
+sources rather than re-derived, most recently on 2026-10-01.
 
 KEEPING IT THAT WAY. Prose belongs in the sources, never in the published HTML.
 If you hand-edit a page in site/operations/, this script will overwrite it the
-next time anyone runs --write, and the edit is gone. Edit other/WWII-List*.md or
+next time anyone runs --write, and the edit is gone. Edit toolkit/sources/ or
 the constants below, then rebuild.
 """
 import sys, os
@@ -42,8 +38,7 @@ WRITE_LIVE = "--write" in sys.argv
 LIVE = os.path.join(REPO, "site", "operations") + os.sep
 STAGE = os.path.join(HERE, "_rebuild") + os.sep
 
-# Source markdown lives in the inbound folder.
-U = os.path.join(REPO, "other") + os.sep
+U =os.path.join(HERE, "sources") + os.sep
 OUT = LIVE if WRITE_LIVE else STAGE
 os.makedirs(OUT, exist_ok=True)
 read = lambda p: open(p, encoding="utf-8").read()
@@ -238,7 +233,7 @@ results["pacific"] = build.build(make_cfg(
     "pacific","flags", pp.emit_md(l2), FW["pacific"], addendum=pac_addendum, scope=None))
 
 # ===== EUROPEAN AIR =====
-l3 = pp.parse_list(read(U+"WWII-List3-Europe-Air_1.md"))
+l3 = pp.parse_list(read(U+"WWII-List3-Europe-Air.md"))
 l3 = pp.fold_entries(l3, pp.prewar_section_entries(prewar, "List 3"))
 results["air"] = build.build(make_cfg(
     "air","insignia", pp.emit_md(l3), FW["air"], scope=SCOPE["air"]))
@@ -288,22 +283,6 @@ ef_cfg["section_labels"] = {
     "Soviet Expansion 1939\u20131941": ("expansion", "Expansion"),
 }
 results["eastern"] = build.build(ef_cfg)
-
-# ===== sprite sheet =====
-# Optional. cairosvg needs a native Cairo build that is awkward on Windows, and
-# nothing in site/ references this PNG — it is a reference sheet for our own use,
-# which is why it lives beside the toolkit rather than in the deploy. Skipping it
-# must not take the page rebuild down with it.
-import sprites
-try:
-    import cairosvg
-except ImportError:
-    print("skipped sprite sheet: cairosvg not installed (pip install cairosvg)")
-else:
-    cairosvg.svg2png(bytestring=sprites.sheet_svg().encode(),
-                     write_to=os.path.join(HERE, "hfs-marking-library.png"),
-                     output_width=1560)
-    print("sprite sheet -> toolkit/hfs-marking-library.png")
 
 for k, r in results.items():
     print(k, "->", os.path.basename(r["out"]), "| entries", r["entries"], "| years", r["years"])
