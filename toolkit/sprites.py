@@ -1,12 +1,11 @@
 """HFS master marking library — national flags (60x40) and air insignia (40x40).
 
-Auto-assembled by build_sprites.py. Edit there, not here.
+This file is the source; edit the symbols here.
 
 Public API:
   SPRITE_DEFS            -> str: the inner <defs> markup (all <symbol>s)
   defs_svg()             -> str: a hidden <svg><defs>...</defs></svg> sprite block
   marker(id, label, kind)-> str: a <figure> with <use> for one marking
-  sheet_svg(ids=None)    -> str: QA contact sheet of every (or given) marking
 """
 
 SPRITE_DEFS = """<symbol id="star5w" viewBox="0 0 10 10"><polygon points="5,0 6.18,3.6 10,3.6 6.9,5.9 8.1,9.5 5,7.3 1.9,9.5 3.1,5.9 0,3.6 3.82,3.6" fill="#f2ecdf"/></symbol>
@@ -143,13 +142,6 @@ SPRITE_DEFS = """<symbol id="star5w" viewBox="0 0 10 10"><polygon points="5,0 6.
     <symbol id="ins-polish" viewBox="0 0 40 40"><rect x="4" y="4" width="32" height="32" fill="#f2ecdf" stroke="#16110A" stroke-width="1.2"/><rect x="4" y="4" width="16" height="16" fill="#c8102e"/><rect x="20" y="20" width="16" height="16" fill="#c8102e"/><rect x="4" y="4" width="32" height="32" fill="none" stroke="#16110A" stroke-width="1.2"/></symbol>
     <symbol id="ins-ff" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#c8102e"/><circle cx="20" cy="20" r="12" fill="#f2ecdf"/><circle cx="20" cy="20" r="6" fill="#1f3a93"/><g fill="#c8102e"><rect x="19" y="14" width="2" height="12"/><rect x="15.5" y="17.5" width="9" height="1.6"/><rect x="17" y="22" width="6" height="1.6"/></g></symbol>"""
 
-# Convenience id groups (a volume's config names the ids it shows, in order).
-FLAGS_ALL = ["us","uk","ca","au","nz","in","za","fr","pl","cz","no","gr","be","nl",
-             "su","de","it","vichy","jp","cn","th","ph","iq","ir","fi","ro","hu",
-             "sk","hr","bg","es","mn"]
-INSIGNIA_ALL = ["ins-us","ins-raf","ins-soviet","ins-luftwaffe","ins-regia",
-                "ins-polish","ins-ff"]
-
 def defs_svg():
     return ('<svg width="0" height="0" style="position:absolute" aria-hidden="true" '
             'focusable="false" xmlns="http://www.w3.org/2000/svg" '
@@ -163,20 +155,3 @@ def marker(sid, label, kind="flag"):
             'xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" '
             'aria-label="%s"><use href="#%s" xlink:href="#%s"/></svg>'
             '<figcaption>%s</figcaption></figure>') % (cls, vb, label, sid, sid, label)
-
-def sheet_svg(ids=None):
-    ids = ids or (FLAGS_ALL + INSIGNIA_ALL)
-    cols, cw, ch = 6, 130, 96
-    rows = (len(ids) + cols - 1) // cols
-    W, H = cols*cw, rows*ch
-    tiles = []
-    for i, sid in enumerate(ids):
-        x = (i % cols)*cw + 30
-        y = (i // cols)*ch + 10
-        vb = "0 0 40 40" if sid.startswith("ins-") else "0 0 60 40"
-        w = 48 if sid.startswith("ins-") else 60
-        tiles.append(f'<g transform="translate({x},{y})"><rect x="-1" y="-1" width="{w+2}" height="42" fill="none" stroke="#888"/><use href="#{sid}" width="{w}" height="40"/></g>')
-        tiles.append(f'<text x="{x+w/2:.0f}" y="{y+58}" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#CFC4AA">{sid}</text>')
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}">'
-            f'<rect width="{W}" height="{H}" fill="#16110A"/>'
-            + SPRITE_DEFS + "".join(tiles) + "</svg>")
