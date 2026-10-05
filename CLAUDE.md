@@ -20,8 +20,10 @@ Netlify project `snazzy-eclair-186bcf`, production branch `master`, remote
 before pushing.**
 
 Check `git branch -vv` before assuming what is live. Work in progress sits on its own
-branch: Dossier No. 003 (the Ducceschi pair) was merged to `master` and reverted on
-2026-09-08, and continues on `dossier-003` while the family reviews it.
+branch. Dossier No. 003 (the Ducceschi pair) was reviewed by the family on `dossier-003`
+and went live on 2026-10-05; `master` carries it now. Its 8 Sep revert was itself
+reverted first, because merging over that revert silently drops every plate the
+original commit added.
 
 Gate before anything goes live or to the client:
 
@@ -70,10 +72,13 @@ use colons in place of em dashes.
 Long-form pages in `site/dossiers/`, styled by `dossier.css`. Pages that a family has not
 yet cleared for publication carry `noindex`; delete the meta when they go public.
 
-The Ducceschi pair is reviewed on the studio's preview portal. `toolkit/export-preview.py`
-regenerates the self-contained copies in
+The Ducceschi pair also has a copy on the studio's gated preview portal, where the family
+reviewed it. `toolkit/export-preview.py` regenerates the self-contained copies in
 `C:\Work\Sites\linden\preview\heritage-fine-scale\`. Edit the pages here and re-run it;
 never edit the preview copies by hand.
+
+The dossier footers' corrections line points at `michael@lindenstreetstudio.com` for
+now: heritagefinescale.com has no mail set up.
 
 ## Unlisted pages
 
