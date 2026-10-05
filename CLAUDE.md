@@ -72,10 +72,10 @@ use colons in place of em dashes.
 Long-form pages in `site/dossiers/`, styled by `dossier.css`. Pages that a family has not
 yet cleared for publication carry `noindex`; delete the meta when they go public.
 
-The Ducceschi pair also has a copy on the studio's gated preview portal, where the family
-reviewed it. `toolkit/export-preview.py` regenerates the self-contained copies in
-`C:\Work\Sites\linden\preview\heritage-fine-scale\`. Edit the pages here and re-run it;
-never edit the preview copies by hand.
+The family reviewed the Ducceschi pair on the studio's gated preview portal. That copy was
+archived on 2026-10-05, once the pages were live (`C:\Work\Sites\linden\archive\heritage-fine-scale\`,
+local only). `toolkit/export-preview.py` wrote it and now fails on purpose, because its
+destination folder is gone; it only works again after `client-archive.py restore`.
 
 The dossier footers' corrections line points at `michael@lindenstreetstudio.com` for
 now: heritagefinescale.com has no mail set up.
