@@ -9,9 +9,11 @@ The canonical pages live in this repo:
 They link /style.css, /dossier.css and /nav.js and use root-absolute paths, none of
 which resolve on lindenstreetstudio.com. The family preview at
 C:\\Work\\Sites\\linden\\preview\\heritage-fine-scale\\ is the same two pages made
-self-contained: the two sheets inlined, the site nav dropped (its links are this
-site's), paths made relative to the folder, the header lockup unlinked, and every
-HTML comment removed (the audit flags studio-facing comments behind the gate).
+self-contained: the two sheets inlined, nav.js inlined with its links pointed at the
+live site (the two dossier pages stay relative, so the menu can be reviewed in the
+preview), paths made relative to the folder, the header lockup pointed at the live
+home, and every HTML comment removed (the audit flags studio-facing comments behind
+the gate).
 
     python toolkit/export-preview.py            # writes both pages
     python toolkit/export-preview.py --dry-run  # reports what would change
@@ -30,6 +32,7 @@ PAGES = {  # source in site/dossiers -> name in the preview folder
     "he-wrote-home-every-day.html": "index.html",
     "il-popolo-di-calamecca.html": "ducceschi-calamecca.html",
 }
+LIVE = "https://heritagefinescale.com"
 LINKS = {  # root-absolute page links -> preview-relative
     "/dossiers/he-wrote-home-every-day.html": "index.html",
     "/dossiers/il-popolo-di-calamecca.html": "ducceschi-calamecca.html",
@@ -59,21 +62,39 @@ def must(text, old, new, count=1):
     return text.replace(old, new)
 
 
-def convert(src_name, html, css):
+def preview_nav(js):
+    """nav.js rewritten for the preview folder: every site link becomes absolute to the
+    live site, the two dossier pages stay relative, and the active-page check compares
+    bare filenames because the preview has no site-root paths."""
+    js = js.replace('href: "/', 'href: "' + LIVE + '/')
+    for a, b in LINKS.items():
+        js = js.replace('href: "' + LIVE + a + '"', 'href: "' + b + '"')
+    js = must(js, 'var path = window.location.pathname.replace(/index\\.html$/, "").replace(/\\/$/, "");',
+                  'var path = window.location.pathname.split("/").pop() || "index.html";')
+    js = must(js, 'if (path === "") path = "/";', 'if (path === "") path = "index.html";')
+    js = must(js, 'function norm(href) { return href.replace(/index\\.html$/, "").replace(/\\/$/, "") || "/"; }',
+                  'function norm(href) { return href; }')
+    js = must(js, '("/#" + frag)', '("' + LIVE + '/#" + frag)')
+    return js
+
+
+def convert(src_name, html, css, nav_js):
     html = must(html, DROP_HEAD, "")
     html = must(html,
         '  <link rel="stylesheet" href="/style.css" />\n  <link rel="stylesheet" href="/dossier.css" />\n',
         "  <style>\n" + css + "\n  </style>\n")
     html = must(html, '      <a href="/" aria-label="Heritage Fine Scale home">',
-                      '      <span aria-label="Heritage Fine Scale">')
-    html = must(html, '        </div>\n      </a>\n    </div>\n  </header>\n\n  <div id="site-nav"></div>',
-                      '        </div>\n      </span>\n    </div>\n  </header>')
-    html = must(html, '  <script src="/nav.js" defer></script>\n\n</body>', "</body>")
+                      '      <a href="' + LIVE + '/" aria-label="Heritage Fine Scale home">')
+    html = must(html, '  <script src="/nav.js" defer></script>\n\n</body>',
+                      "  <script>\n" + nav_js + "\n  </script>\n\n</body>")
     html = html.replace('"/images/dossiers/ducceschi/', '"images/dossiers/ducceschi/')
     for a, b in LINKS.items():
         html = html.replace(f'href="{a}"', f'href="{b}"')
     assert 'href="/' not in html.replace('href="https://', ""), "a root-absolute link survived"
-    html = re.sub(r"[ \t]*<!--.*?-->[ \t]*\n?", "", html, flags=re.S)
+    # A comment on its own line goes with its line; one inside a paragraph goes alone,
+    # so the words on either side keep the space between them.
+    html = re.sub(r"^[ \t]*<!--(?:(?!-->).)*-->[ \t]*\n", "", html, flags=re.S | re.M)
+    html = re.sub(r"[ \t]*<!--.*?-->", "", html, flags=re.S)
     html = re.sub(r"\n{3,}", "\n\n", html)
     return html
 
@@ -81,8 +102,9 @@ def convert(src_name, html, css):
 def main():
     dry = "--dry-run" in sys.argv
     css = read(os.path.join(SITE, "style.css")) + "\n\n" + read(os.path.join(SITE, "dossier.css"))
+    nav_js = preview_nav(read(os.path.join(SITE, "nav.js")))
     for src_name, dst_name in PAGES.items():
-        out = convert(src_name, read(os.path.join(SITE, "dossiers", src_name)), css)
+        out = convert(src_name, read(os.path.join(SITE, "dossiers", src_name)), css, nav_js)
         dst = os.path.join(DEST, dst_name)
         same = os.path.exists(dst) and read(dst) == out
         print(("unchanged " if same else ("would write " if dry else "wrote ")) + dst)
