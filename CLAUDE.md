@@ -86,7 +86,10 @@ now: heritagefinescale.com has no mail set up.
 noindexed, and disallowed for most crawlers in `robots.txt` (ClaudeBot is deliberately
 allowed). None is linked from the nav or the homepage; keep it that way.
 
-`backyard/` (2026-10-07) is a family photo page: the backyard plus two of the local fields.
+`backyard/` (2026-10-07) is a family photo page: the backyard, two of the local fields, and
+a panorama at the bottom stitched from the first five backyard frames (2018 to 2022) with a
+cylindrical warp and chained offsets; OpenCV's own stitcher bent the yard into a bowl. The
+strip pans sideways (a small page-local script adds mouse drag) and opens in the carousel.
 Its photos are 1400px, metadata stripped; the full-size originals stay with Michael. It
 uses the studio's shared carousel, installed into `site/assets/` by `install-lightbox.py`,
 and is the only page on the site that does so far.
