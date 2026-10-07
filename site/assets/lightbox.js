@@ -12,6 +12,10 @@
    every other site the first time one of them is edited.
 
    Caption falls back to data-cap, then alt, then nothing.
+
+   Optional data-full="…" names a larger file for the viewer, so a grid can
+   carry light thumbnails while the overlay shows real detail. Without it the
+   viewer shows the image the page already loaded, as it always has.
    ══════════════════════════════════════════════════════════════════════ */
 (function () {
   "use strict";
@@ -51,10 +55,16 @@
     var el = imgs[i];
     // currentSrc picks the resolution the browser actually chose for a
     // srcset image; src alone can hand back the wrong one.
-    img.src = el.currentSrc || el.src;
+    img.src = el.dataset.full || el.currentSrc || el.src;
     img.alt = el.alt || "";
     cap.textContent = el.dataset.cap || el.alt || "";
     count.textContent = (i + 1) + " / " + imgs.length;
+    // Full-size files are heavy, so warm the neighbours while this one is
+    // being looked at; paging then does not stall on a blank viewer.
+    [i - 1, i + 1].forEach(function (k) {
+      var nb = imgs[(k + imgs.length) % imgs.length];
+      if (nb.dataset.full) new Image().src = nb.dataset.full;
+    });
   }
 
   function open(n) {

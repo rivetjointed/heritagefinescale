@@ -90,7 +90,9 @@ allowed). None is linked from the nav or the homepage; keep it that way.
 a panorama at the bottom stitched from the first five backyard frames (2018 to 2022) with a
 cylindrical warp and chained offsets; OpenCV's own stitcher bent the yard into a bowl. The
 strip pans sideways (a small page-local script adds mouse drag) and opens in the carousel.
-Its photos are 1400px, metadata stripped; the full-size originals stay with Michael. It
+The grid loads 800px files from `img/thumb/`; each image's `data-full` points the carousel at
+a 2400px copy in `img/` (the panorama: 1000px tall strip, 7611px full). Metadata is
+stripped; the camera originals stay with Michael. The labels are Michael's own words. It
 uses the studio's shared carousel, installed into `site/assets/` by `install-lightbox.py`,
 and is the only page on the site that does so far.
 

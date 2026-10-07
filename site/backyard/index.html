@@ -87,6 +87,8 @@
     font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
     color:var(--muted);font-weight:400;
   }
+  h2 a{color:inherit;text-decoration-color:var(--accent);text-underline-offset:.18em;text-decoration-thickness:1px}
+  h2 a:hover{color:var(--accent)}
   .h2rule{height:1px;background:var(--rule);margin:0 0 1rem}
   .grid{
     display:grid;
@@ -120,6 +122,11 @@
     height:clamp(14rem,42vw,26rem);width:auto;max-width:none;
   }
   .pano-note{margin:.6rem 0 0;font-size:.85rem;color:var(--muted)}
+
+  /* More of the screen for the viewer than the shared default, for photos
+     people want to look into. Outranks the shared .lb-img on specificity. */
+  #lightbox .lb-img{max-width:97vw;max-height:86vh}
+  #lightbox .lb-cap{margin-top:.6rem}
 
   footer{
     border-top:1px solid var(--rule);
@@ -171,40 +178,40 @@
     <h2>The backyard <span class="n">15 photos</span></h2>
     <div class="h2rule"></div>
     <div class="grid">
-      <figure><img class="zoomable" src="img/2018.jpg" width="1400" height="1050" alt="Ekho, from the porch"><figcaption aria-hidden="true">Ekho, from the porch</figcaption></figure>
-      <figure><img class="zoomable" src="img/2019.jpg" width="1400" height="1050" alt="Janine's octopus next to the skull, with the tiki idols on the fence behind the arborvitae" loading="lazy"><figcaption aria-hidden="true">Janine's octopus next to the skull, with the tiki idols on the fence behind the arborvitae</figcaption></figure>
-      <figure><img class="zoomable" src="img/2020.jpg" width="1400" height="1050" alt="The arborvitae along the back fence, with the tiki idols behind them" loading="lazy"><figcaption aria-hidden="true">The arborvitae along the back fence, with the tiki idols behind them</figcaption></figure>
-      <figure><img class="zoomable" src="img/2021.jpg" width="1400" height="1050" alt="The tree by the side fence" loading="lazy"><figcaption aria-hidden="true">The tree by the side fence</figcaption></figure>
-      <figure><img class="zoomable" src="img/2022.jpg" width="1400" height="1050" alt="The patio and Martha's pot shed, with the grape trellis beyond" loading="lazy"><figcaption aria-hidden="true">The patio and Martha's pot shed, with the grape trellis beyond</figcaption></figure>
-      <figure><img class="zoomable" src="img/2023.jpg" width="1400" height="1050" alt="The grape trellis and the privacy fence I built" loading="lazy"><figcaption aria-hidden="true">The grape trellis and the privacy fence I built</figcaption></figure>
-      <figure><img class="zoomable" src="img/2024.jpg" width="1400" height="1050" alt="The grape trellis. The four posts on the right are the originals; I built the extension when we moved in" loading="lazy"><figcaption aria-hidden="true">The grape trellis. The four posts on the right are the originals; I built the extension when we moved in</figcaption></figure>
-      <figure><img class="zoomable" src="img/2025.jpg" width="1050" height="1400" alt="Through the grape trellis" loading="lazy"><figcaption aria-hidden="true">Through the grape trellis</figcaption></figure>
-      <figure><img class="zoomable" src="img/2026.jpg" width="1400" height="1050" alt="The back corner" loading="lazy"><figcaption aria-hidden="true">The back corner</figcaption></figure>
-      <figure><img class="zoomable" src="img/2027.jpg" width="1050" height="1400" alt="Along the fence toward the house" loading="lazy"><figcaption aria-hidden="true">Along the fence toward the house</figcaption></figure>
-      <figure><img class="zoomable" src="img/2028.jpg" width="1400" height="1050" alt="Across the lawn" loading="lazy"><figcaption aria-hidden="true">Across the lawn</figcaption></figure>
-      <figure><img class="zoomable" src="img/2029.jpg" width="1400" height="1050" alt="The grape trellis, the privacy fence I built, and the house" loading="lazy"><figcaption aria-hidden="true">The grape trellis, the privacy fence I built, and the house</figcaption></figure>
-      <figure><img class="zoomable" src="img/2030.jpg" width="1400" height="1050" alt="Martha's pot shed, seen through the grape trellis" loading="lazy"><figcaption aria-hidden="true">Martha's pot shed, seen through the grape trellis</figcaption></figure>
-      <figure><img class="zoomable" src="img/2031.jpg" width="1050" height="1400" alt="The raspberry volunteer, two inches taller since the last photo" loading="lazy"><figcaption aria-hidden="true">The raspberry volunteer, two inches taller since the last photo</figcaption></figure>
-      <figure><img class="zoomable" src="img/2032.jpg" width="1400" height="1050" alt="The new bed by the fence" loading="lazy"><figcaption aria-hidden="true">The new bed by the fence</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2018.jpg" data-full="img/2018.jpg" width="800" height="600" alt="Ekho, from the porch"><figcaption aria-hidden="true">Ekho, from the porch</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2019.jpg" data-full="img/2019.jpg" width="800" height="600" alt="Janine's octopus next to the skull, with the tiki idols on the fence behind the arborvitae" loading="lazy"><figcaption aria-hidden="true">Janine's octopus next to the skull, with the tiki idols on the fence behind the arborvitae</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2020.jpg" data-full="img/2020.jpg" width="800" height="600" alt="The arborvitae along the back fence, with the tiki idols behind them" loading="lazy"><figcaption aria-hidden="true">The arborvitae along the back fence, with the tiki idols behind them</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2021.jpg" data-full="img/2021.jpg" width="800" height="600" alt="The tree by the side fence" loading="lazy"><figcaption aria-hidden="true">The tree by the side fence</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2022.jpg" data-full="img/2022.jpg" width="800" height="600" alt="The patio, with the grape trellis beyond" loading="lazy"><figcaption aria-hidden="true">The patio, with the grape trellis beyond</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2023.jpg" data-full="img/2023.jpg" width="800" height="600" alt="I built the grape trellis and the privacy fence. The four original posts with the grape, on the right, were already here" loading="lazy"><figcaption aria-hidden="true">I built the grape trellis and the privacy fence. The four original posts with the grape, on the right, were already here</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2024.jpg" data-full="img/2024.jpg" width="800" height="600" alt="The grape trellis. The four posts on the right are the originals; I built the extension when we moved in" loading="lazy"><figcaption aria-hidden="true">The grape trellis. The four posts on the right are the originals; I built the extension when we moved in</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2025.jpg" data-full="img/2025.jpg" width="600" height="800" alt="Through the grape trellis" loading="lazy"><figcaption aria-hidden="true">Through the grape trellis</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2026.jpg" data-full="img/2026.jpg" width="800" height="600" alt="The back corner" loading="lazy"><figcaption aria-hidden="true">The back corner</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2027.jpg" data-full="img/2027.jpg" width="600" height="800" alt="Along the fence towards Martha's Pot Shed" loading="lazy"><figcaption aria-hidden="true">Along the fence towards Martha's Pot Shed</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2028.jpg" data-full="img/2028.jpg" width="800" height="600" alt="Across the lawn" loading="lazy"><figcaption aria-hidden="true">Across the lawn</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2029.jpg" data-full="img/2029.jpg" width="800" height="600" alt="The grape trellis and the privacy fence" loading="lazy"><figcaption aria-hidden="true">The grape trellis and the privacy fence</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2030.jpg" data-full="img/2030.jpg" width="800" height="600" alt="Martha's Pot Shed, seen through the grape trellis" loading="lazy"><figcaption aria-hidden="true">Martha's Pot Shed, seen through the grape trellis</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2031.jpg" data-full="img/2031.jpg" width="600" height="800" alt="The raspberry volunteer, two inches taller since the last photo" loading="lazy"><figcaption aria-hidden="true">The raspberry volunteer, two inches taller since the last photo</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2032.jpg" data-full="img/2032.jpg" width="800" height="600" alt="Started as a stick 2 years ago!" loading="lazy"><figcaption aria-hidden="true">Started as a stick 2 years ago!</figcaption></figure>
     </div>
   </section>
 
   <section>
-    <h2>The local fields <span class="n">2 photos</span></h2>
+    <h2><span><a href="https://www.tualatinhillsparks.org/" target="_blank" rel="noopener">Tualatin Hills Parks and Rec</a> soccer fields</span> <span class="n">2 photos</span></h2>
     <div class="h2rule"></div>
     <div class="grid">
-      <figure><img class="zoomable" src="img/2010.jpg" width="1400" height="1050" alt="The fields" loading="lazy"><figcaption aria-hidden="true">The fields</figcaption></figure>
-      <figure><img class="zoomable" src="img/2011.jpg" width="1400" height="1050" alt="The path along the fields" loading="lazy"><figcaption aria-hidden="true">The path along the fields</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2010.jpg" data-full="img/2010.jpg" width="800" height="600" alt="The fields" loading="lazy"><figcaption aria-hidden="true">The fields</figcaption></figure>
+      <figure><img class="zoomable" src="img/thumb/2011.jpg" data-full="img/2011.jpg" width="800" height="600" alt="The path along the fields" loading="lazy"><figcaption aria-hidden="true">The path along the fields</figcaption></figure>
     </div>
   </section>
 
   <section>
-    <h2>The whole yard <span class="n">5 photos, stitched</span></h2>
+    <h2>180° view of the backyard <span class="n">5 photos, stitched</span></h2>
     <div class="h2rule"></div>
     <figure class="pano">
-      <img class="zoomable" src="img/panorama.jpg" width="5075" height="1009" alt="The whole yard in one view, from Ekho on the porch around to the patio" loading="lazy">
+      <img class="zoomable" src="img/thumb/panorama.jpg" data-full="img/panorama.jpg" width="5027" height="1000" alt="180° view of the backyard, starting from the left rail of the porch around to the right side with the patio" loading="lazy">
     </figure>
-    <p class="pano-note">Swipe or drag sideways to look around. Tap to see it all at once.</p>
+    <p class="pano-note">Starting from the left rail of the porch around to the right side with the patio. Swipe or drag sideways to look around; tap to see it all at once.</p>
   </section>
 
   <footer>
