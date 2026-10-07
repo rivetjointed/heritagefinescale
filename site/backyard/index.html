@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>The Backyard</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Libre+Franklin:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --paper:#FBFAF6;
+    --panel:#F1F2EA;
+    --rule:#D5D9C9;
+    --hair:#E4E7DA;
+    --ink:#1B1F18;
+    --muted:#6A7263;
+    --accent:#3F5535;
+    --ember:#8C4B22;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#12150E;
+      --panel:#1B1F16;
+      --rule:#333A2B;
+      --hair:#272D20;
+      --ink:#E9ECE0;
+      --muted:#98A18C;
+      --accent:#A8C486;
+      --ember:#D9915F;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#12150E;
+    --panel:#1B1F16;
+    --rule:#333A2B;
+    --hair:#272D20;
+    --ink:#E9ECE0;
+    --muted:#98A18C;
+    --accent:#A8C486;
+    --ember:#D9915F;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Libre Franklin",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:16px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sheet{
+    max-width:64rem;margin:0 auto;
+    padding:3rem 1.75rem 3rem;
+    display:flex;flex-direction:column;gap:2.5rem;
+  }
+
+  /* ---- masthead ---- */
+  .masthead{display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem}
+  .mark{color:var(--accent);line-height:0}
+  .mark svg{display:block}
+  .kicker{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--ember);
+  }
+  h1{
+    font-family:Fraunces,Georgia,serif;
+    font-weight:500;font-size:clamp(2.2rem,6vw,3.1rem);
+    line-height:1.02;margin:0;letter-spacing:-.02em;text-wrap:balance;
+  }
+  .rules{width:100%;max-width:50rem;display:flex;flex-direction:column;gap:2px;margin-top:.75rem}
+  .rules span:first-child{height:2px;background:var(--accent);opacity:.75}
+  .rules span:last-child{height:1px;background:var(--rule)}
+  .hint{margin:.6rem 0 0;font-size:.9rem;color:var(--muted)}
+
+  /* ---- galleries ---- */
+  h2{
+    font-family:Fraunces,Georgia,serif;
+    font-weight:500;font-size:1.28rem;margin:0 0 .2rem;
+    letter-spacing:-.01em;
+    display:flex;align-items:baseline;gap:.75rem;
+  }
+  h2 .n{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);font-weight:400;
+  }
+  .h2rule{height:1px;background:var(--rule);margin:0 0 1rem}
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(14.5rem,1fr));
+    gap:.6rem;
+  }
+  .grid img{
+    display:block;width:100%;height:auto;
+    aspect-ratio:4/3;object-fit:cover;
+    background:var(--panel);
+    border-radius:2px;
+  }
+
+  footer{
+    border-top:1px solid var(--rule);
+    padding-top:1.25rem;
+    text-align:center;font-size:.8rem;color:var(--muted);
+  }
+
+  @media (max-width:560px){
+    .sheet{padding:2rem 1rem 2.5rem;gap:2rem}
+    .grid{grid-template-columns:1fr 1fr;gap:.4rem}
+  }
+
+  /* ── ATTRIBUTION (Linden Street Studio) ─────────────────────────────
+     Doubled class = specificity 0,0,2,0, which outranks a host site's own
+     `footer a { color: … }` (0,0,1,1) without !important. color:inherit is
+     what stops this rendering as a link. No opacity — see attribution.py. */
+  .lss-credit.lss-credit {
+    display: inline-flex; align-items: center; gap: 0.45em;
+    color: inherit; text-decoration: none;
+    font-size: 0.74rem;
+  }
+  .lss-credit.lss-credit:visited { color: inherit; }
+  .lss-credit.lss-credit:hover,
+  .lss-credit.lss-credit:focus-visible {
+    text-decoration: underline; text-underline-offset: 0.22em;
+  }
+  .lss-mark { fill: currentColor; flex: none; }
+</style>
+<link rel="stylesheet" href="/assets/lightbox.css">
+</head>
+<body>
+<div class="sheet">
+
+  <header class="masthead">
+    <div class="mark" aria-hidden="true">
+      <svg width="34" height="30" viewBox="0 0 34 30" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 27V15M17 19l-3.5-3M17 17l3-2.5"/>
+        <path d="M17 3c-5 0-8.5 3.4-8.5 7.4 0 3.6 3 6.1 6.5 6.1h4c3.5 0 6.5-2.5 6.5-6.1C25.5 6.4 22 3 17 3Z"/>
+        <path d="M2 27h30M4 27v-7M9 27v-7M25 27v-7M30 27v-7M2 22.5h9M23 22.5h9"/>
+      </svg>
+    </div>
+    <div class="kicker">For the family</div>
+    <h1>The Backyard</h1>
+    <div class="rules"><span></span><span></span></div>
+    <p class="hint">Tap any photo to see it larger, then swipe or use the arrows to page through.</p>
+  </header>
+
+  <section>
+    <h2>The backyard <span class="n">15 photos</span></h2>
+    <div class="h2rule"></div>
+    <div class="grid">
+      <img class="zoomable" src="img/2018.jpg" width="1400" height="1050" alt="From the porch, with the dog">
+      <img class="zoomable" src="img/2019.jpg" width="1400" height="1050" alt="The back fence and the row of evergreens" loading="lazy">
+      <img class="zoomable" src="img/2020.jpg" width="1400" height="1050" alt="The lawn and the evergreens along the fence" loading="lazy">
+      <img class="zoomable" src="img/2021.jpg" width="1400" height="1050" alt="The tree by the side fence" loading="lazy">
+      <img class="zoomable" src="img/2022.jpg" width="1400" height="1050" alt="The side patio, with the arbor beyond" loading="lazy">
+      <img class="zoomable" src="img/2023.jpg" width="1400" height="1050" alt="The arbor and the lattice screen" loading="lazy">
+      <img class="zoomable" src="img/2024.jpg" width="1400" height="1050" alt="The arbor, straight on" loading="lazy">
+      <img class="zoomable" src="img/2025.jpg" width="1050" height="1400" alt="Through the arbor" loading="lazy">
+      <img class="zoomable" src="img/2026.jpg" width="1400" height="1050" alt="The back corner" loading="lazy">
+      <img class="zoomable" src="img/2027.jpg" width="1050" height="1400" alt="Along the fence toward the house" loading="lazy">
+      <img class="zoomable" src="img/2028.jpg" width="1400" height="1050" alt="Across the lawn" loading="lazy">
+      <img class="zoomable" src="img/2029.jpg" width="1400" height="1050" alt="The arbor and the house" loading="lazy">
+      <img class="zoomable" src="img/2030.jpg" width="1400" height="1050" alt="The shed corner, seen through the arbor" loading="lazy">
+      <img class="zoomable" src="img/2031.jpg" width="1050" height="1400" alt="A new planting by the block wall" loading="lazy">
+      <img class="zoomable" src="img/2032.jpg" width="1400" height="1050" alt="The new bed by the fence" loading="lazy">
+    </div>
+  </section>
+
+  <section>
+    <h2>The local fields <span class="n">2 photos</span></h2>
+    <div class="h2rule"></div>
+    <div class="grid">
+      <img class="zoomable" src="img/2010.jpg" width="1400" height="1050" alt="The fields" loading="lazy">
+      <img class="zoomable" src="img/2011.jpg" width="1400" height="1050" alt="The path along the fields" loading="lazy">
+    </div>
+  </section>
+
+  <footer>
+    <a class="lss-credit" href="https://lindenstreetstudio.com" target="_blank" rel="noopener" aria-label="Created by Linden Street Studio, opens in a new tab"><svg class="lss-mark" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.0 18.4 3.2 22.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" fill="none"/><g transform="translate(6.2,18.2) rotate(-10) scale(0.85)"><path d="M0 -0.55C4.2 -1.75 9.2 -2 13.4 -0.2 9.2 1.6 4.2 1.35 0 0.55Z"/></g><g transform="translate(5.8,17.6) rotate(35) scale(0.95) translate(-12,-17.8)"><path d="M12 2.2C13.4 6 16.4 8.4 16.4 12.2c0 2.4-.2 5.2-1.4 6.2-1 .8-2.4.2-3-.8-.7 1.2-2.3 1.8-3.3.9-1.3-1.1-1.5-4.1-1.5-6.6C7.2 8.1 10.6 6 12 2.2Z"/></g></svg>Created by Linden Street Studio</a>
+  </footer>
+
+</div>
+<script src="/assets/lightbox.js" defer></script>
+</body>
+</html>

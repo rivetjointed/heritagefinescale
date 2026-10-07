@@ -1,0 +1,119 @@
+/* ══════════════════════════════════════════════════════════════════════
+   Full-bleed image carousel — Linden Street Studio
+   Pairs with lightbox.js. Drop both into any site, add class="zoomable"
+   to an <img>, and that is the whole integration. The overlay markup is
+   built by the script, so there is nothing to copy into the page.
+
+   DELIBERATELY SELF-CONTAINED. No var(--…) from the host page: this ships
+   onto client sites whose tokens are unknown, and a missing custom
+   property here would mean an invisible control on someone else's site.
+   The overlay is its own dark surface in every case, which is why fixed
+   colours are correct rather than lazy.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.zoomable { cursor: zoom-in; transition: opacity .15s ease; }
+.zoomable:hover { opacity: .9; }
+/* lightbox.js makes these focusable, so they need a visible focus ring on the
+   host page's own background. Sized to sit outside the image, not on top of it. */
+.zoomable:focus-visible { outline: 2.5px solid currentColor; outline-offset: 3px; }
+
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(10, 9, 7, .95);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#lightbox.show { display: flex; }
+
+/* The image gets the viewport, not the gap between two buttons. The nav is
+   pinned to the edges (below) so nothing competes with it for width. */
+.lb-img {
+  max-width: 92vw;
+  max-height: 78vh;
+  object-fit: contain;
+  display: block;
+  background: #fff;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, .8);
+}
+
+.lb-cap {
+  margin-top: .85rem;
+  max-width: 680px;
+  padding: 0 1rem;
+  text-align: center;
+  color: #d4c4ac;
+  font-size: .9rem;
+  line-height: 1.5;
+}
+.lb-count {
+  margin-top: .5rem;
+  font-size: .7rem;
+  letter-spacing: .08em;
+  color: #8b8378;
+}
+
+.lb-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1001;
+  width: 48px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* A DARK scrim, not a light one. On a narrow screen these sit on top of the
+     image, and this carousel shows bright website screenshots, where a pale
+     translucent button disappears completely. Dark reads against both the
+     backdrop and the photo. */
+  background: rgba(10, 9, 7, .66);
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 3px;
+  color: #f2ede4;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  transition: background .15s;
+}
+.lb-nav:hover { background: rgba(10, 9, 7, .82); color: #fff; }
+#lbPrev { left: 8px; }
+#lbNext { right: 8px; }
+
+/* One image is not a carousel. */
+#lightbox.single .lb-nav,
+#lightbox.single .lb-count { display: none; }
+
+.lb-close {
+  position: fixed;
+  top: 12px;
+  right: 16px;
+  z-index: 1002;
+  padding: 4px 10px;
+  background: rgba(10, 9, 7, .66);
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 3px;
+  color: #f2ede4;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.lb-close:hover { background: rgba(10, 9, 7, .82); color: #fff; }
+
+/* The host page's focus ring is tuned for its own background, which is not
+   this one. Keyboard users have to be able to see where they are here too. */
+#lightbox :focus-visible { outline: 2.5px solid #fff; outline-offset: 3px; }
+
+@media (max-width: 560px) {
+  .lb-nav { width: 38px; height: 64px; font-size: 1.6rem; }
+  .lb-img { max-width: 94vw; max-height: 70vh; }
+  .lb-close { font-size: 1.7rem; top: 8px; right: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zoomable, .lb-nav { transition: none; }
+}

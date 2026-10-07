@@ -82,9 +82,14 @@ now: heritagefinescale.com has no mail set up.
 
 ## Unlisted pages
 
-`sourdough/` and `ham-and-bean-soup/` are personal hobby pages: unlisted, noindexed, and
-disallowed for most crawlers in `robots.txt` (ClaudeBot is deliberately allowed). Neither
-is linked from the nav or the homepage; keep it that way.
+`sourdough/`, `ham-and-bean-soup/` and `backyard/` are personal pages: unlisted,
+noindexed, and disallowed for most crawlers in `robots.txt` (ClaudeBot is deliberately
+allowed). None is linked from the nav or the homepage; keep it that way.
+
+`backyard/` (2026-10-07) is a family photo page: the backyard plus two of the local fields.
+Its photos are 1400px, metadata stripped; the full-size originals stay with Michael. It
+uses the studio's shared carousel, installed into `site/assets/` by `install-lightbox.py`,
+and is the only page on the site that does so far.
 
 The sourdough page keeps its own carousel. That is a sanctioned exception to the studio's
 shared carousel (reasons in `linden/CLAUDE.md`). The dossier pages also carry their own
